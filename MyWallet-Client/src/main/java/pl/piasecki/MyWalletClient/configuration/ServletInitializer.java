@@ -1,15 +1,15 @@
-package pl.piasecki.Wallet.configuration;
+package pl.piasecki.MyWalletClient.configuration;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-import pl.piasecki.Wallet.WalletApplication;
+import pl.piasecki.MyWalletClient.ClientApplication;
 
 public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(WalletApplication.class);
+		return application.sources(ClientApplication.class);
 	}
 
 }

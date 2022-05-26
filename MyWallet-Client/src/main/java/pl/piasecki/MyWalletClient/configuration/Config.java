@@ -1,4 +1,4 @@
-package pl.piasecki.Wallet.configuration;
+package pl.piasecki.MyWalletClient.configuration;
 
 import org.springframework.context.annotation.Configuration;
 

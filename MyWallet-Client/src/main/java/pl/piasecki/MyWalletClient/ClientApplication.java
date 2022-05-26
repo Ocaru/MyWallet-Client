@@ -1,15 +1,18 @@
-package pl.piasecki.Wallet;
+package pl.piasecki.MyWalletClient;
+
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication
-public class WalletApplication {
+public class ClientApplication {
+
 
 	public static void main(String[] args) {
-		SpringApplication.run(WalletApplication.class, args);
-		
-	}
+		 SpringApplication.run(ClientApplication.class, args);
+
+		 }
 	
 
 
