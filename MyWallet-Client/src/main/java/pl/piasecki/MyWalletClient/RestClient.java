@@ -1,20 +1,14 @@
 package pl.piasecki.MyWalletClient;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import pl.piasecki.MyWalletClient.model.User;
 
 public class RestClient {
 
@@ -30,28 +24,21 @@ public class RestClient {
     headers.add("Accept", "*/*");
   }
 
-  public String get(String uri) {
-    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-    ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity, String.class);
-    this.setStatus(responseEntity.getStatusCode());
-    return responseEntity.getBody();
-    
-  }
-  
-  
-  
-  public List<User> parseFromGet2(String line)
-  {
-	  ObjectMapper mapper = new ObjectMapper();
-	  List<User> userList = new ArrayList<User>();
 
-	  try {
-		userList = Arrays.asList(mapper.readValue(line, User[].class));
-	} catch (JsonProcessingException e) {
-		e.printStackTrace();
-	}
-	  return userList;
-  }
+  public <T> List<T> get(String uri, Class<T> klazz) {
+	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+	    ResponseEntity<List<T>> responseEntity;
+	    
+	    responseEntity = rest.exchange(
+	    		server + uri, 
+	    		HttpMethod.GET, 
+	    		requestEntity, 
+	    		new ParameterizedTypeReference<List<T>>(){});
+	    
+	    this.setStatus(responseEntity.getStatusCode());
+	    return responseEntity.getBody();
+	    
+	  }
 
   public String post(String uri, String json) {   
     HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
