@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8"/>
     <title>MyWallet</title>
-    <link rel="stylesheet" href="/main.css" />
+    <link rel="stylesheet" href="/indexStyle.css" />
     
 </head>
 <body>
@@ -19,38 +19,33 @@
 			  	<button onclick="history.back()">Go Back</button>
 		 				<br>		
 				<ul style = "color: #000000; font-weight: bold; ">
-					  <li><a href="users/list">Users</a></li>
-					  <li><a href="worktime/start">Working time</a></li>
-					  <li><a href="empty">News</a></li>
-					  <li><a href="myContact">Contact</a></li>
+					  <li><a href="/userPage">Users</a></li>
 					  <li><a href="empty">About</a></li>
 				</ul>
 		</div>
 		<div class = "griditem3">				
-			<table class="blueTable" style="vertical-align: top; height: 100px;">
-				
-				<thead>
-					<tr style="height: 30px;">
-					<td style="height: 30px; width: 50px; ">IDENTIFICATION NUMBER</td>
-					<td style="height: 30px; width: 100px;">NAME</td>
-					<td style="height: 30px; width: 100px;">SURNAME</td>
-					<td style="height: 30px; width: 100px;">EMAIL</td>
-					<td style="height: 30px; width: 100px;">EXPENDITURES</td>
-					</tr>
-				</thead>
-				
-				<tbody>
-				
-				    <tr th:each="user : ${userList}">
-			            <td th:text="${user.id}"></td>
-			            <td th:text="${user.name}"></td>
-			            <td th:text="${user.surname}"></td>
-			            <td th:text="${user.email}"></td>
-			            <td th:text="${user.expenditureList}"></td>
-			   		</tr>
-				</tbody>
-				
-			</table>
+				   <h1 style="color:black;">Enter your next expenditure</h1><br>
+   				
+					<form class = "formExpenditure" th:action="@{saveExpenditure}" th:object = "${expenditure}" method ="POST">
+					<input type ="hidden" th:field = "*{id}"/>
+					
+							<font  color = black>User identification number</font><br>
+						<input type = "number" th:field = "*{user_id}" name="user_id" /><br><br>
+						
+							<font color = black>Name of expenditure</font><br>
+						<input type = "text" th:field = "*{name}" th:value = "name"/><br><br>
+						
+							<font color = black>Money spent</font><br>
+						<input type = "number"  step="0.01" th:field = "*{money}" /><br><br>
+						
+							<font color = black>Description</font><br>
+						<input type = "text" th:field = "*{description}"/><br><br>
+						
+						
+						<input type = "submit" value="Save" class="save">
+			
+					</form>
+					<br>
 		</div>
 		
 		<div class = "griditem4">	
@@ -62,16 +57,24 @@
 					<td style="height: 30px; width: 100px;">NAME</td>
 					<td style="height: 30px; width: 100px;">MONEY</td>
 					<td style="height: 30px; width: 100px;">DESCRIPTION</td>
+					<td style="height: 30px; width: 100px;">USER ID</td>
+					<td style="height: 30px; width: 100px;">ACTIONS</td>
 					</tr>
 				</thead>
 				
 				<tbody>
 				
-				    <tr th:each="expenditure : ${expenditureList}">
+				    <tr th:each="expenditure : ${expenditureList}" th:href = "@{userPage/update}">
+				    
+				    	
 			            <td th:text="${expenditure.id}"></td>
 			            <td th:text="${expenditure.name}"></td>
 			            <td th:text="${expenditure.money}"></td>
 			            <td th:text="${expenditure.description}"></td>
+			            <td th:text="${expenditure.user_id}"></td>
+			            <td>
+			            	<input type="button" value="Update" th:action="@{updateExpenditure}" th:object = "${expenditure}" /><br><br> 
+			            </td>
 			   		</tr>
 				</tbody>
 				
