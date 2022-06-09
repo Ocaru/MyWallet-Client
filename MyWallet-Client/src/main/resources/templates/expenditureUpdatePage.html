@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>MyWallet</title>
+    <link rel="stylesheet" href="/indexStyle.css" />
+    
+    
+    <script type = "text/javascript">
+    </script>
+    
+</head>
+<body>
+	<div class="container">
+		<div class = "griditem1">
+			<h1 style="color: #4485b8;">
+				<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
+			</h1>
+			<h4>Update expenditure</h4>
+		</div>
+
+		<div class = "griditem2">		
+			  	<button onclick="history.back()">Go Back</button>
+		 				<br>		
+				<ul style = "color: #000000; font-weight: bold; ">
+					  <li><a href="/">Home Page</a></li>
+					  <li><a href="empty">About</a></li>
+				</ul>
+		</div>
+
+		
+		<div class = "griditem3">				
+				   <h1 style="color:black;">Update expenditure</h1><br>
+   				
+					<form class = "updateFormExpenditure" th:action="@{updateExpenditure}" th:object = "${expenditureToUpdate}" method ="POST">
+							
+							<font  color = black>Identification number</font><br>
+						<input type ="number" id ="id2" name = "id" readonly="readonly" th:value = "${expenditureToUpdate.id}" /> <br><br>
+					
+							<font  color = black>User identification number</font><br>
+						<input type = "number" id ="user_id2" name = "user_id" th:value = "${expenditureToUpdate.user_id}" /><br><br>
+						
+							<font color = black>Name of expenditure</font><br>
+						<input type = "text" id ="name2" name = "name" th:value = "${expenditureToUpdate.name}" /><br><br>
+						
+							<font color = black>Money spent</font><br>
+						<input type = "number"  step="0.01" id ="money2" name = "money" th:value = "${expenditureToUpdate.money}" /><br><br>
+						
+							<font color = black>Description</font><br>
+						<input type = "text" id ="description2" name = "description" th:value = "${expenditureToUpdate.description}"/><br><br>
+						
+						
+						<input type = "submit" value="Update expenditure">
+			
+					</form>
+					<br>
+		</div>
+		
+		<div class = "griditem4">	
+			<table class="blueTable" style="vertical-align: top; height: 100px;">
+				
+				<thead>
+					<tr style="height: 30px;">
+					<td style="height: 30px; width: 50px; ">IDENTIFICATION NUMBER</td>
+					<td style="height: 30px; width: 100px;">NAME</td>
+					<td style="height: 30px; width: 100px;">MONEY</td>
+					<td style="height: 30px; width: 100px;">DESCRIPTION</td>
+					<td style="height: 30px; width: 100px;">USER ID</td>
+					</tr>
+				</thead>
+				
+				<tbody>
+				
+				    <tr>
+				    
+			            <td th:text="${expenditureToUpdate.id}"></td>
+			            <td th:text="${expenditureToUpdate.name}"></td>
+			            <td th:text="${expenditureToUpdate.money}"></td>
+			            <td th:text="${expenditureToUpdate.description}"></td>
+			            <td th:text="${expenditureToUpdate.user_id}"></td>
+
+			   		</tr>
+			   		          
+				</tbody>
+				
+			</table>
+		</div>
+</div>
+
+</body>
+</html>
