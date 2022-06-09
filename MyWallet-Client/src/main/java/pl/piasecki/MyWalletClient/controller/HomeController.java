@@ -69,7 +69,6 @@ public class HomeController {
 	@RequestMapping("/updateExpenditure")
 	public String updateExpenditure(@ModelAttribute("expenditure") Expenditure expenditure )
 	{
-		System.out.println("UPDATEEPXENDITURE START");
 		JsonMapper mapper = new JsonMapper();
 		String expenditureJSON = "";
 		try {
@@ -87,24 +86,38 @@ public class HomeController {
 	public String setExpenditureToUpdate(@ModelAttribute("expenditure") Expenditure expenditure, Model model )
 	{
 		 Expenditure[] exps = rc.getExpenditures("/expenditures");
-		
-		 System.out.println(expenditure.toString()); 
-
-		 System.out.println(exps.toString());
-		 
 		 
 		 for (Expenditure exp : exps) {
 				if(exp.getId() == expenditure.getId())
 				{
 					model.addAttribute("expenditureToUpdate", exp);
-					System.out.println("\t DODANO DO MODELU expenditureToUpdate");
-					System.out.println(exp.toString());
 				} 
 			
 		}
 		 
 		return "/expenditureUpdatePage";
 	}
+	
+	@RequestMapping("/deleteExpenditure")
+	public String deleteExpenditure(@ModelAttribute("expenditure") Expenditure expenditure )
+	{
+		
+		 Expenditure[] exps = rc.getExpenditures("/expenditures");
+		 Expenditure tempExpenditure = new Expenditure();
+		 
+		 for (Expenditure exp : exps) {
+				if(exp.getId() == expenditure.getId())
+				{
+					tempExpenditure = exp;
+					break;
+				} 
+		}
+		
+		rc.delete("/expenditures/" + tempExpenditure.getId());
+		
+		return "redirect:/";
+	}
+	
 	
 
 }
