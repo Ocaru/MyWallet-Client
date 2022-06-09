@@ -91,13 +91,14 @@ form.formExpenditure {
 			
 			}
 			
-.griditem4 { grid-area: center2;
+			
+.griditem4 { grid-area: center3;
 			background-color: #43B0F1; 
 			text-align: center;
 			border-radius: 5px;
 
-			
 			}		
+			
 			
 .container {
   display: grid;
@@ -105,6 +106,6 @@ form.formExpenditure {
   grid-template-areas: 	
 	  "header header header header header"
 	  "left center1 center1 center1 center1"
-	  "left center2 center2 center2 center2"
-	  "left center2 center2 center2 center2";
+	  "center3 center3 center3 center3 center3"
+	  "center3 center3 center3 center3 center3";
 }
