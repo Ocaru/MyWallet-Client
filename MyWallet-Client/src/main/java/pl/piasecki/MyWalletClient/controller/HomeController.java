@@ -23,11 +23,14 @@ public class HomeController {
 	private RestClient rc = new RestClient();
 	
 	@RequestMapping("/")
-	public String index(Model model) {
+	public String showHomePage(Model model) {
 		//expenditureList = rc.get("/expenditures", Expenditure.class);
+		
 		expenditureTab = rc.getExpenditures("/expenditures");
-
 		model.addAttribute("expenditureList", expenditureTab);
+		
+		userList = rc.get("/users", User.class);
+		model.addAttribute("userList", userList);
 		
 		Expenditure expenditure = new Expenditure();
 		model.addAttribute("expenditure", expenditure);
@@ -39,12 +42,13 @@ public class HomeController {
 	@RequestMapping("/userPage")
 	public String showUserPage(Model model)
 	{
-		userList = rc.get("/users", User.class);
-		User theUser = new User();
 		
-		model.addAttribute("user", theUser);
+		userList = rc.get("/users", User.class);
 		model.addAttribute("userList", userList);
 		
+		User theUser = new User();
+		model.addAttribute("user", theUser);
+	
 		return "userPage";
 	}
 	
@@ -61,6 +65,21 @@ public class HomeController {
 		rc.post("/expenditures", expenditureJSON);
 		
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/saveUser")
+	public String saveNewUser(@ModelAttribute("user") User user)
+	{
+		JsonMapper mapper = new JsonMapper();
+		String userJSON = ""; 
+		try {
+			userJSON = mapper.writeValueAsString(user);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		rc.post("/users", userJSON);
+		
+		return "redirect:/userPage";
 	}
 	
 	

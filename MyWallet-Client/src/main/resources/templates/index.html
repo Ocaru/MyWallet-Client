@@ -41,11 +41,15 @@
 				   
    				
 					<form class = "formExpenditure" th:action="@{saveExpenditure}" th:object = "${expenditure}" method ="POST">
-					<h1 style="color:black;">Enter your next expenditure</h1><br>
-					<input type ="hidden" th:field = "*{id}"/>
+						<h1 style="color:black;">Enter your next expenditure</h1><br>
 					
-							<font  color = black>User identification number</font><br>
-						<input type = "number" id ="user_id" name = "user_id"  /><br><br>
+						<input type ="hidden" th:field = "*{id}"/>
+					
+						<font color = black>User identification number</font><br>
+						<select id ="user_id" name = "user_id">
+						    <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.id}"></option>
+						</select><br><br>
+						
 						
 							<font color = black>Name of expenditure</font><br>
 						<input type = "text" id ="name" name = "name" /><br><br>
@@ -69,19 +73,21 @@
 				
 				<thead>
 					<tr style="height: 30px;">
-					<td style="height: 30px; width: 50px; ">IDENTIFICATION NUMBER</td>
-					<td style="height: 30px; width: 100px;">NAME</td>
-					<td style="height: 30px; width: 100px;">MONEY</td>
-					<td style="height: 30px; width: 100px;">DESCRIPTION</td>
-					<td style="height: 30px; width: 100px;">USER ID</td>
-					<td style="height: 30px; width: 100px;">ACTIONS</td>
+					<td style=" max-width: 50px;">NUMBER</td>
+					<td style=" max-width: 50px;">IDENTIFICATION NUMBER</td>
+					<td style=" width: 400px;">NAME</td>
+					<td style=" width: 200px;">MONEY</td>
+					<td style=" width: 400px;">DESCRIPTION</td>
+					<td style=" max-width: 50px;">USER ID</td>
+					<td style=" max-width: 50px;"></td>
+					<td style=" max-width: 50px;"></td>
 					</tr>
 				</thead>
 				
 				<tbody>
 				
-				    <tr th:each="exp, expStat: ${expenditureList}" th:href = "@{userPage/update}">
-				    
+				    <tr th:each="exp, expStat: ${expenditureList}">
+				    	<td th:text="${expStat.count}" style=" text-align:left;"></td>
 			            <td th:text="${exp.id}"></td>
 			            <td th:text="${exp.name}"></td>
 			            <td th:text="${exp.money}"></td>
@@ -93,7 +99,8 @@
 			            		<input type = "submit" value = "Update" />
 
 			            	</form>
-			            	
+			            </td>
+			            <td>
 			            	<form th:action = "@{/deleteExpenditure}" th:object = "${expenditure}">
 			            		<input type = "hidden" th:value = "${exp.id}" id="id" name = "id" />
 			            		<input type = "submit" value = "Delete" />

@@ -24,6 +24,29 @@
 				</ul>
 		</div>
 		<div class = "griditem3">				
+				   
+   				
+					<form class = "formUser" th:action="@{saveUser}" th:object = "${user}" method ="POST">
+						
+						<h1 style="color:black;">Enter user</h1><br>
+					
+						<input type ="hidden" th:field = "*{id}"/>
+					
+						<font color = black>Name</font><br>
+						<input type = "text" id ="name" name = "name" /><br><br>
+						
+						<font color = black>Surname</font><br>
+						<input type = "text" id ="surname" name = "surname" /><br><br>
+						
+						<font color = black>E-mail</font><br>
+						<input type = "text" id ="emial" name = "email" /><br><br>		
+						
+						<input type = "submit" value="Save new user">
+			
+					</form>
+					<br>
+		</div>
+		<div class = "griditem4">				
 			<table class="blueTable" style="vertical-align: top; height: 100px;">
 				
 				<thead>
@@ -48,9 +71,6 @@
 			</table>
 		</div>
 		
-		<div class = "griditem4">	
-
-		</div>
 </div>
 
 </body>

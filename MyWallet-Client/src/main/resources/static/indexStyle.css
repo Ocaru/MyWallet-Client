@@ -4,8 +4,10 @@ table.blueTable {
   border: 1px solid #1C6EA4;
   background-color: #EEEEEE;
   width: 100%;
-  text-align: left;
   border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  align-content: center;
 }
 table.blueTable td, table.blueTable th {
   border: 1px solid #AAAAAA;
