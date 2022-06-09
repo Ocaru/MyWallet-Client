@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import pl.piasecki.MyWalletClient.model.Expenditure;
+
 public class RestClient {
 
   private String server = "http://localhost:8080";
@@ -39,6 +41,22 @@ public class RestClient {
 	    return responseEntity.getBody();
 	    
 	  }
+  
+  public Expenditure[] getExpenditures(String uri) {
+	  
+	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+	    ResponseEntity<Expenditure[]> responseEntity;
+	    
+	    responseEntity = rest.exchange(
+	    		server + uri, 
+	    		HttpMethod.GET, 
+	    		requestEntity,
+	    		Expenditure[].class);
+	    
+	    this.setStatus(responseEntity.getStatusCode());
+	    return responseEntity.getBody();
+	    
+	  }
 
   public String post(String uri, String json) {   
     HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
@@ -46,20 +64,21 @@ public class RestClient {
     this.setStatus(responseEntity.getStatusCode());
     return responseEntity.getBody();
   }
-/*
+
   
   public void put(String uri, String json) {
     HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
-    ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.PUT, requestEntity, null);
+    ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.PUT, requestEntity, String.class);
     this.setStatus(responseEntity.getStatusCode());   
   }
 
+  
   public void delete(String uri) {
     HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-    ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.DELETE, requestEntity, null);
+    ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.DELETE, requestEntity, String.class);
     this.setStatus(responseEntity.getStatusCode());
   }
-*/
+  
   public HttpStatus getStatus() {
     return status;
   }
