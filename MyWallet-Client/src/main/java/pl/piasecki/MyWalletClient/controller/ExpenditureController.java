@@ -15,10 +15,9 @@ import pl.piasecki.MyWalletClient.model.Expenditure;
 import pl.piasecki.MyWalletClient.model.User;
 
 @Controller
-public class HomeController {
+public class ExpenditureController {
 
 	private List<User> userList;
-	//private List<Expenditure> expenditureList;
 	private Expenditure[] expenditureTab;
 	private RestClient rc = new RestClient();
 	
@@ -39,18 +38,7 @@ public class HomeController {
 
 	}
 	
-	@RequestMapping("/userPage")
-	public String showUserPage(Model model)
-	{
-		
-		userList = rc.get("/users", User.class);
-		model.addAttribute("userList", userList);
-		
-		User theUser = new User();
-		model.addAttribute("user", theUser);
-	
-		return "userPage";
-	}
+
 	
 	@RequestMapping("/saveExpenditure")
 	public String saveNewExpenditure(@ModelAttribute("expenditure") Expenditure expenditure )
@@ -67,20 +55,7 @@ public class HomeController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/saveUser")
-	public String saveNewUser(@ModelAttribute("user") User user)
-	{
-		JsonMapper mapper = new JsonMapper();
-		String userJSON = ""; 
-		try {
-			userJSON = mapper.writeValueAsString(user);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		rc.post("/users", userJSON);
-		
-		return "redirect:/userPage";
-	}
+
 	
 	
 
