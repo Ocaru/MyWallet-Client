@@ -106,8 +106,8 @@ form.formExpenditure {
   display: grid;
   grid-auto-flow: column;
   grid-template-areas: 	
-	  "header header header header header"
-	  "left center1 center1 center1 center1"
-	  "center3 center3 center3 center3 center3"
-	  "center3 center3 center3 center3 center3";
+	  "header header header header header header header header header header"
+	  "left center1 center1 center2 center2 center2 center2 center2 center2 center2"
+	  "center3 center3 center3 center3 center3 center3 center3 center3 center3 center3"
+	  "center3 center3 center3 center3 center3 center3 center3 center3 center3 center3";
 }

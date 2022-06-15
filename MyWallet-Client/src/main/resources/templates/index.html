@@ -69,18 +69,34 @@
 		
 		
 		<div class = "griditem4">	
+		
+			<form th:action="@{filterByUser}" th:object = "${user}" method ="GET">
+						
+						<font color = black>Filter by user</font>
+						<select id ="id" name = "id">
+						    <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.id}" ></option>
+						    <ins>th:text="${user.name}"</ins>
+						</select>
+					
+						<input type = "submit" value="Ok">
+			</form>
+			
+			<form th:action="@{/}" >
+				<input type = "submit" value="Reset">
+			</form>
+		
 			<table class="blueTable" style="vertical-align: top; height: 100px;">
 				
 				<thead>
-					<tr style=" height: 30px;">
-					<td style=" max-width: 50px;">NUMBER</td>
-					<td style=" max-width: 50px;">IDENTIFICATION NUMBER</td>
-					<td style=" width: 400px;">NAME</td>
-					<td style=" width: 200px;">MONEY</td>
-					<td style=" width: 400px;">DESCRIPTION</td>
-					<td style=" max-width: 50px;">USER ID</td>
-					<td style=" max-width: 50px;"></td>
-					<td style=" max-width: 50px;"></td>
+					<tr style = "height: 30px;">
+					<td style = "max-width: 50px;">NUMBER</td>
+					<td style = "max-width: 50px;">IDENTIFICATION NUMBER</td>
+					<td style = "width: 400px;">NAME</td>
+					<td style = "width: 200px;">MONEY</td>
+					<td style = "width: 400px;">DESCRIPTION</td>
+					<td style = "max-width: 50px;">USER ID</td>
+					<td style = "max-width: 50px;"></td>
+					<td style = "max-width: 50px;"></td>
 					</tr>
 				</thead>
 				

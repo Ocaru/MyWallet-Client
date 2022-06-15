@@ -1,5 +1,6 @@
 package pl.piasecki.MyWalletClient.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -111,6 +112,31 @@ public class ExpenditureController {
 		
 		return "redirect:/";
 	}
+	
+	
+	@RequestMapping("/filterByUser")
+	public String sortByUser(@ModelAttribute("user") User user, Model model )
+	{
+		 Expenditure[] expenditureTab;
+		 expenditureTab = rc.getExpenditures("/expenditures/user_id=" + user.getId());
+
+		 for (Expenditure expenditure : expenditureTab) {
+			System.out.println(expenditure);
+		}
+		 
+		 model.addAttribute("expenditureList", expenditureTab);
+		
+			userList = rc.get("/users", User.class);
+			model.addAttribute("userList", userList);
+			
+			Expenditure expenditure = new Expenditure();
+			model.addAttribute("expenditure", expenditure);
+		
+		
+		return "index";
+	}
+	
+	
 	
 	
 
