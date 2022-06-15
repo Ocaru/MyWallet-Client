@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import pl.piasecki.MyWalletClient.model.Expenditure;
+import pl.piasecki.MyWalletClient.model.User;
 
 public class RestClient {
 
@@ -52,6 +53,22 @@ public class RestClient {
 	    		HttpMethod.GET, 
 	    		requestEntity,
 	    		Expenditure[].class);
+	    
+	    this.setStatus(responseEntity.getStatusCode());
+	    return responseEntity.getBody();
+	    
+	  }
+  
+  public User[] getUsers(String uri) {
+	  
+	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+	    ResponseEntity<User[]> responseEntity;
+	    
+	    responseEntity = rest.exchange(
+	    		server + uri, 
+	    		HttpMethod.GET, 
+	    		requestEntity,
+	    		User[].class);
 	    
 	    this.setStatus(responseEntity.getStatusCode());
 	    return responseEntity.getBody();
