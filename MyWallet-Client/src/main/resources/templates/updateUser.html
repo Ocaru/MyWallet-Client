@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>MyWallet</title>
+    <link rel="stylesheet" href="/indexStyle.css" />
+    
+    
+    <script type = "text/javascript">
+    </script>
+    
+</head>
+<body>
+	<div class="container">
+		<div class = "griditem1">
+			<h1 style="color: #4485b8;">
+				<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
+			</h1>
+			<h2>User update</h2>
+		</div>
+
+		<div class = "griditem2">		
+			  	<button onclick="history.back()">Go Back</button>
+		 				<br>		
+				<ul style = "color: #000000; font-weight: bold; ">
+					  <li><a href="/">Home Page</a></li>
+					  <li><a href="empty">About</a></li>
+				</ul>
+		</div>
+
+		
+		<div class = "griditem3">				
+				   <h2 style="color:black;">User update</h2><br>
+   				
+					<form class = "updateFormUser" th:action="@{updateUser}" th:object = "${userToUpdate}" method ="POST">
+							
+							<font  color = black>Identification number</font><br>
+						<input type ="number" id ="id" name = "id" readonly="readonly" th:value = "${userToUpdate.id}" /> <br><br>
+					
+							<font  color = black>Name</font><br>
+						<input type = "text" id ="name" name = "name" th:value = "${userToUpdate.name}" /><br><br>
+						
+							<font color = black>Surname</font><br>
+						<input type = "text" id ="surname" name = "surname" th:value = "${userToUpdate.surname}" /><br><br>
+						
+							<font color = black>Email</font><br>
+						<input type = "text" id ="email" name = "email" th:value = "${userToUpdate.email}" /><br><br>
+						
+						
+						<input type = "submit" value="Update user">
+			
+					</form>
+					<br>
+		</div>
+		
+		<div class = "griditem4">	
+			<table class="blueTable" style="vertical-align: top; height: 100px;">
+				
+				<thead>
+					<tr style="height: 30px;">
+					<td style="height: 30px; width: 50px; ">IDENTIFICATION NUMBER</td>
+					<td style="height: 30px; width: 100px;">NAME</td>
+					<td style="height: 30px; width: 100px;">SURNAME</td>
+					<td style="height: 30px; width: 100px;">EMAIL</td>
+					</tr>
+				</thead>
+				
+				<tbody>
+				
+				    <tr>
+				    
+			            <td th:text="${userToUpdate.id}"></td>
+			            <td th:text="${userToUpdate.name}"></td>
+			            <td th:text="${userToUpdate.surname}"></td>
+			            <td th:text="${userToUpdate.email}"></td>
+
+			   		</tr>
+			   		          
+				</tbody>
+				
+			</table>
+		</div>
+</div>
+
+</body>
+</html>

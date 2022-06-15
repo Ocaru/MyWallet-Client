@@ -51,10 +51,12 @@
 				
 				<thead>
 					<tr style="height: 30px;">
-					<td style="height: 30px; width: 50px; ">IDENTIFICATION NUMBER</td>
-					<td style="height: 30px; width: 100px;">NAME</td>
-					<td style="height: 30px; width: 100px;">SURNAME</td>
-					<td style="height: 30px; width: 100px;">EMAIL</td>
+					<td style="height: 30px; max-width: 50px; ">IDENTIFICATION NUMBER</td>
+					<td style="height: 30px; width: 400px;">NAME</td>
+					<td style="height: 30px; width: 400px;">SURNAME</td>
+					<td style="height: 30px; width: 400px;">EMAIL</td>
+					<td style="height: 30px; max-width: 10px;"></td>
+					<td style="height: 30px; max-width: 10px;"></td>
 					</tr>
 				</thead>
 				
@@ -65,6 +67,20 @@
 			            <td th:text="${user.name}"></td>
 			            <td th:text="${user.surname}"></td>
 			            <td th:text="${user.email}"></td>
+			            			            <td>
+			            	<form th:action = "@{/setUserToUpdate}" th:object = "${user}">
+			            		<input type = "hidden" th:value = "${user.id}" id="id" name = "id" />
+			            		<input type = "submit" value = "Update" />
+
+			            	</form>
+			            </td>
+			            <td>
+			            	<form th:action = "@{/deleteUser}" th:object = "${user}">
+			            		<input type = "hidden" th:value = "${user.id}" id="id" name = "id" />
+			            		<input type = "submit" value = "Delete" />
+
+			            	</form>
+			            </td>
 			   		</tr>
 				</tbody>
 				
