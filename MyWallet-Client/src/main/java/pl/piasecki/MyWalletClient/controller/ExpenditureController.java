@@ -1,6 +1,5 @@
 package pl.piasecki.MyWalletClient.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -13,12 +12,14 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import pl.piasecki.MyWalletClient.RestClient;
 import pl.piasecki.MyWalletClient.model.Expenditure;
+import pl.piasecki.MyWalletClient.model.ExpenditureCategory;
 import pl.piasecki.MyWalletClient.model.User;
 
 @Controller
 public class ExpenditureController {
 
 	private List<User> userList;
+	private ExpenditureCategory[] expenditureCategoryTab;
 	private Expenditure[] expenditureTab;
 	private RestClient rc = new RestClient();
 	
@@ -31,6 +32,10 @@ public class ExpenditureController {
 		
 		userList = rc.get("/users", User.class);
 		model.addAttribute("userList", userList);
+		
+		expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
+		model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
+		
 		
 		Expenditure expenditure = new Expenditure();
 		model.addAttribute("expenditure", expenditure);
@@ -89,6 +94,8 @@ public class ExpenditureController {
 				} 
 			
 		}
+			expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
+			model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
 		 
 		return "/expenditureUpdatePage";
 	}
@@ -131,6 +138,9 @@ public class ExpenditureController {
 			
 			Expenditure expenditure = new Expenditure();
 			model.addAttribute("expenditure", expenditure);
+			
+			expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
+			model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
 		
 		
 		return "index";

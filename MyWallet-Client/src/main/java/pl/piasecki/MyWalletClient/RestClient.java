@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import pl.piasecki.MyWalletClient.model.Expenditure;
+import pl.piasecki.MyWalletClient.model.ExpenditureCategory;
 import pl.piasecki.MyWalletClient.model.User;
 
 public class RestClient {
@@ -43,6 +44,7 @@ public class RestClient {
 	    
 	  }
   
+  
   public Expenditure[] getExpenditures(String uri) {
 	  
 	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
@@ -69,6 +71,23 @@ public class RestClient {
 	    		HttpMethod.GET, 
 	    		requestEntity,
 	    		User[].class);
+	    
+	    this.setStatus(responseEntity.getStatusCode());
+	    return responseEntity.getBody();
+	    
+	  }
+  
+  
+  public ExpenditureCategory[] getExpenditureCategory(String uri) {
+	  
+	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+	    ResponseEntity<ExpenditureCategory[]> responseEntity;
+	    
+	    responseEntity = rest.exchange(
+	    		server + uri, 
+	    		HttpMethod.GET, 
+	    		requestEntity,
+	    		ExpenditureCategory[].class);
 	    
 	    this.setStatus(responseEntity.getStatusCode());
 	    return responseEntity.getBody();
