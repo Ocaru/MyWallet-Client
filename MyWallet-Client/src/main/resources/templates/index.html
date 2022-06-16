@@ -6,37 +6,45 @@
     <link rel="stylesheet" href="/indexStyle.css" />
     
     <script type = "text/javascript">
-    
-	    function updateExp(id, userId, money) {
-	    	
 	    
-	    		document.getElementById("id2").value = new Number(id);
-	    		document.getElementById("user_id2").value = new Number(userId);
-	    		document.getElementById("money2").value = new Number(money);
-	    	  
-	    	}
-	    
+		function getTime()
+		{
+			let date  = new Date();
+
+			document.getElementById("clock").innerHTML = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+			
+			document.getElementById("date").innerHTML = date.getDate() + "."+ date.getMonth()+1 + "." + date.getFullYear();	
+						
+			setTimeout("getTime()", 1000)
+		}
 	 
     </script>
     
+    
 </head>
-<body>
+<body onload="getTime();">
 	<div class="container">
 		<div class = "griditem1">
 			<h1 style="color: #4485b8;">
 				<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
 			</h1>
 			<h4>Manage your expenditures!</h4>
+			<div class="square"></div>
 		</div>
 
-		<div class = "griditem2">		
-			  	<button onclick="history.back()">Go Back</button>
-		 				<br>		
-				<ul style = "color: #000000; font-weight: bold; ">
-					  <li><a href="/userPage">Users</a></li>
-					  <li><a href="empty">About</a></li>
-				</ul>
+		<div class = "griditem2">	
+		
+				<br>
+   				<div id="clock" style="text-align: center"></div>
+   				
+   				<div id="date" style="text-align: center"></div><br>
+			  	
+				<a href="/userPage">USERS</a><br>
+				<a href="empty">ABOUT</a><br><br>
+
+				<button onclick="history.back()">BACK</button>	
 		</div>
+		
 		<div class = "griditem3">				
 				   
    				
@@ -45,17 +53,25 @@
 					
 						<input type ="hidden" th:field = "*{id}"/>
 					
-						<font color = black>User identification number</font><br>
+						<font color = black>User</font><br>
 						<select id ="user_id" name = "user_id">
-						    <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.id}"></option>
+						    <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.id} + ${' - '} + ${user.name} + ${' '} + ${user.surname} "></option>
 						</select><br><br>
-						
 						
 							<font color = black>Name of expenditure</font><br>
 						<input type = "text" id ="name" name = "name" /><br><br>
 						
 							<font color = black>Money spent</font><br>
 						<input type = "number"  step="0.01" id ="money" name = "money" /><br><br>
+						
+							<font color = black>Category</font><br>
+							
+						<select id ="category_id" name = "category_id">
+						    <option th:each="category : ${expenditureCategoryTab}" th:value="${category.id}" th:text="${category.name}"></option>
+						</select><br><br>
+						
+							<font color = black>Date</font><br>
+						<input type = "date" id ="date" name = "date" /><br><br>
 						
 							<font color = black>Description</font><br>
 						<input type = "text" id ="description" name = "description"/><br><br>
@@ -69,16 +85,15 @@
 		
 		
 		<div class = "griditem4">	
-		
+		<div class="square"></div>
 			<form th:action="@{filterByUser}" th:object = "${user}" method ="GET">
 						
-						<font color = black>Filter by user</font>
-						<select id ="id" name = "id">
-						    <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.id}" ></option>
-						    <ins>th:text="${user.name}"</ins>
-						</select>
+				<font color = black>Filter by user</font>
+				<select id ="id" name = "id">
+					<option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.id}" ></option>
+				</select>
 					
-						<input type = "submit" value="Ok">
+				<input type = "submit" value="Ok">
 			</form>
 			
 			<form th:action="@{/}" >
@@ -91,8 +106,10 @@
 					<tr style = "height: 30px;">
 					<td style = "max-width: 50px;">NUMBER</td>
 					<td style = "max-width: 50px;">IDENTIFICATION NUMBER</td>
-					<td style = "width: 400px;">NAME</td>
-					<td style = "width: 200px;">MONEY</td>
+					<td style = "width: 200px;">NAME</td>
+					<td style = "width: 100px;">MONEY</td>
+					<td style = "width: 100px;">CATEGORY</td>
+					<td style = "width: 100px;">DATE</td>
 					<td style = "width: 400px;">DESCRIPTION</td>
 					<td style = "max-width: 50px;">USER ID</td>
 					<td style = "max-width: 50px;"></td>
@@ -107,8 +124,11 @@
 			            <td th:text="${exp.id}"></td>
 			            <td th:text="${exp.name}"></td>
 			            <td th:text="${exp.money}"></td>
+			            <td th:text="${expenditureCategoryTab[exp.category_id-1].name}"></td>
+			            <td th:text="${exp.date}"></td>
 			            <td th:text="${exp.description}"></td>
 			            <td th:text="${exp.user_id}"></td>
+
 			            <td>
 			            	<form th:action = "@{/setExpenditureToUpdate}" th:object = "${expenditure}">
 			            		<input type = "hidden" th:value = "${exp.id}" id="id" name = "id" />
@@ -129,6 +149,12 @@
 				
 			</table>
 		</div>
+		
+		
+		<div class = "griditem5">	
+		
+		</div>
+		
 </div>
 
 </body>

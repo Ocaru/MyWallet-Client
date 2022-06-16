@@ -1,21 +1,30 @@
 package pl.piasecki.MyWalletClient.model;
 
 
+import java.math.BigDecimal;
+import java.sql.Date;
+
+
 public class Expenditure {
 
 	private long id;
 	private String name;
-	private float money;
+	private BigDecimal money;
+	private Date date;
 	private String description;
 	private long user_id;
+	private long category_id;
 	
 	public Expenditure() {}
 	
-	public Expenditure(String name, float money, String description, long user_id) {
+	public Expenditure(String name, BigDecimal money, Date date, 
+			String description, long user_id, long category_id) {
 		this.name = name;
 		this.money = money;
+		this.date = date;
 		this.description = description;
 		this.user_id = user_id;
+		this.category_id=category_id;
 	}
 
 	
@@ -38,16 +47,21 @@ public class Expenditure {
 		this.description = description;
 	}
 	
-	public float getMoney() {
+	public BigDecimal getMoney() {
 		return money;
 	}
 
-	public void setMoney(float money) {
+	public void setMoney(BigDecimal money) {
 		this.money = money;
 	}
-	
-	
 
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	public long getUser_id() {
 		return user_id;
@@ -57,17 +71,18 @@ public class Expenditure {
 		this.user_id = user_id;
 	}
 
-	@Override
-	public String toString() {
-		return "Expenditure [id=" + id + ", name=" + name + ", money=" + money + ", description=" + description
-				+ ", user_id=" + user_id + "]";
+	public long getCategory_id() {
+		return category_id;
 	}
 
+	public void setCategory_id(long category_id) {
+		this.category_id = category_id;
+	}
 
-	
-	
-	
-	
-	
+	@Override
+	public String toString() {
+		return "Expenditure [id=" + id + ", name=" + name + ", money=" + money + ", date=" + date + ", description="
+				+ description + ", user_id=" + user_id + ", category_id=" + category_id + "]";
+	}
 	
 }

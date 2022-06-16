@@ -3,29 +3,47 @@
 <head lang="en">
     <meta charset="UTF-8"/>
     <title>MyWallet</title>
-    <link rel="stylesheet" href="/indexStyle.css" />
+    <link rel="stylesheet" href="updatePageStyle.css" />
     
     
     <script type = "text/javascript">
+	
+    function getTime()
+	{
+		let date  = new Date();
+
+		document.getElementById("clock").innerHTML = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+		
+		document.getElementById("date").innerHTML = date.getDate() + "."+ date.getMonth()+1 + "." + date.getFullYear();	
+					
+		setTimeout("getTime()", 1000)
+	}
+    
     </script>
     
 </head>
-<body>
+<body onload="getTime();">
 	<div class="container">
 		<div class = "griditem1">
 			<h1 style="color: #4485b8;">
 				<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
 			</h1>
 			<h4>Update expenditure</h4>
+			<div class="square"></div>	
 		</div>
 
 		<div class = "griditem2">		
-			  	<button onclick="history.back()">Go Back</button>
-		 				<br>		
-				<ul style = "color: #000000; font-weight: bold; ">
-					  <li><a href="/">Home Page</a></li>
-					  <li><a href="empty">About</a></li>
-				</ul>
+		
+				<br>
+   				<div id="clock" style="text-align: center"></div>
+   				
+   				<div id="date" style="text-align: center"></div><br>
+			  	
+				<a href="/userPage">USERS</a><br>
+				<a href="/">EXPENDITURE</a><br><br>
+				<a href="empty">ABOUT</a><br><br>
+
+				<button onclick="history.back()">BACK</button>	
 		</div>
 
 		
@@ -46,6 +64,15 @@
 							<font color = black>Money spent</font><br>
 						<input type = "number"  step="0.01" id ="money2" name = "money" th:value = "${expenditureToUpdate.money}" /><br><br>
 						
+							<font color = black>Category</font><br>
+						<select id ="category_id" name = "category_id">
+						    <option th:each="category : ${expenditureCategoryTab}" th:value="${category.id}" th:text= "${category.name}" ></option>
+						</select><br><br>
+						
+							<font color = black>Date</font><br>
+						<input type = "date" id ="date" name = "date" th:value = "${expenditureToUpdate.date}"/><br><br>
+						
+						
 							<font color = black>Description</font><br>
 						<input type = "text" id ="description2" name = "description" th:value = "${expenditureToUpdate.description}"/><br><br>
 						
@@ -57,6 +84,7 @@
 		</div>
 		
 		<div class = "griditem4">	
+		<div class="square"></div>	
 			<table class="blueTable" style="vertical-align: top; height: 100px;">
 				
 				<thead>
@@ -64,6 +92,8 @@
 					<td style="height: 30px; width: 50px; ">IDENTIFICATION NUMBER</td>
 					<td style="height: 30px; width: 100px;">NAME</td>
 					<td style="height: 30px; width: 100px;">MONEY</td>
+					<td style="height: 30px; width: 100px;">CATEGORY</td>
+					<td style="height: 30px; width: 100px;">DATE</td>
 					<td style="height: 30px; width: 100px;">DESCRIPTION</td>
 					<td style="height: 30px; width: 100px;">USER ID</td>
 					</tr>
@@ -76,6 +106,8 @@
 			            <td th:text="${expenditureToUpdate.id}"></td>
 			            <td th:text="${expenditureToUpdate.name}"></td>
 			            <td th:text="${expenditureToUpdate.money}"></td>
+			            <td th:text="${expenditureCategoryTab[expenditureToUpdate.category_id-1].name}"></td>
+			            <td th:text="${expenditureToUpdate.date}"></td>
 			            <td th:text="${expenditureToUpdate.description}"></td>
 			            <td th:text="${expenditureToUpdate.user_id}"></td>
 
