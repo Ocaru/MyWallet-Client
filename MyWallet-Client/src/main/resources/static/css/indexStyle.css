@@ -78,28 +78,19 @@ form.formExpenditure {
  			}
 			
 .griditem2 { grid-area: left;
-			background-color: #8b8f8c; 
 			text-align: left;
-			border-radius: 5px;
-			background: rgb(241,241,241);
-			background: linear-gradient(180deg, rgba(241,241,241,1) 0%, rgba(200,200,196,1) 49%, rgba(221,221,221,1) 100%);
 			}
 			
 
-.griditem3 { grid-area: center1;
-			background-color: #43B0F1; 
-			text-align: left;
-			border-radius: 5px;
-			
-			}
+.griditem3 { grid-area: center1; 
+			text-align: left;}
 			
 			
-.griditem4 { grid-area: center3;
-			background-color: #43B0F1; 
-			text-align: center;
-			border-radius: 5px;
-
-			}		
+.griditem4 { grid-area: center3; 
+			text-align: center;}
+				
+.griditem5 { grid-area: center2; 
+			text-align: center;}			
 			
 			
 .container {
@@ -107,7 +98,13 @@ form.formExpenditure {
   grid-auto-flow: column;
   grid-template-areas: 	
 	  "header header header header header header header header header header"
-	  "left center1 center1 center2 center2 center2 center2 center2 center2 center2"
+	  "left center1 center2 center2 center2 center2 center2 center2 center2 center2"
 	  "center3 center3 center3 center3 center3 center3 center3 center3 center3 center3"
 	  "center3 center3 center3 center3 center3 center3 center3 center3 center3 center3";
+ background: linear-gradient(90deg, rgba(241,241,241,1) 0%, rgba(200,200,196,1) 49%, rgba(221,221,221,1) 100%);
 }
+
+.square {
+		  height: 5px;
+		  width: 100%;
+		  background-color: #000000;}
