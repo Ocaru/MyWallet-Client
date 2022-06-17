@@ -3,29 +3,34 @@
 <head lang="en">
     <meta charset="UTF-8"/>
     <title>MyWallet</title>
-    <link rel="stylesheet" href="/indexStyle.css" />
+    <link rel="stylesheet" href="css/updatePageStyle.css" />
     
     
-    <script type = "text/javascript">
-    </script>
+	<script src="/js/timeAndDate.js"></script>
     
 </head>
-<body>
+<body onload="getTime();">
 	<div class="container">
 		<div class = "griditem1">
 			<h1 style="color: #4485b8;">
 				<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
 			</h1>
 			<h2>User update</h2>
+			<div class="square"></div>	
 		</div>
 
 		<div class = "griditem2">		
-			  	<button onclick="history.back()">Go Back</button>
-		 				<br>		
-				<ul style = "color: #000000; font-weight: bold; ">
-					  <li><a href="/">Home Page</a></li>
-					  <li><a href="empty">About</a></li>
-				</ul>
+		
+				<br>
+   				<div id="clock" style="text-align: center"></div>
+   				
+   				<div id="date" style="text-align: center"></div><br>
+			  	
+				<a href="/userPage">USERS</a><br>
+				<a href="/">EXPENDITURE</a><br><br>
+				<a href="empty">ABOUT</a><br><br>
+
+				<button onclick="history.back()">BACK</button>	
 		</div>
 
 		
@@ -53,7 +58,8 @@
 					<br>
 		</div>
 		
-		<div class = "griditem4">	
+		<div class = "griditem4">
+		<div class="square"></div>		
 			<table class="blueTable" style="vertical-align: top; height: 100px;">
 				
 				<thead>

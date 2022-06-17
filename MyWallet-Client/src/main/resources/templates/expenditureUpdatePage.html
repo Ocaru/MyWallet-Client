@@ -3,23 +3,10 @@
 <head lang="en">
     <meta charset="UTF-8"/>
     <title>MyWallet</title>
-    <link rel="stylesheet" href="updatePageStyle.css" />
+    <link rel="stylesheet" href="css/updatePageStyle.css" />
     
     
-    <script type = "text/javascript">
-	
-    function getTime()
-	{
-		let date  = new Date();
-
-		document.getElementById("clock").innerHTML = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-		
-		document.getElementById("date").innerHTML = date.getDate() + "."+ date.getMonth()+1 + "." + date.getFullYear();	
-					
-		setTimeout("getTime()", 1000)
-	}
-    
-    </script>
+    <script src="/js/timeAndDate.js"></script>
     
 </head>
 <body onload="getTime();">
@@ -64,9 +51,20 @@
 							<font color = black>Money spent</font><br>
 						<input type = "number"  step="0.01" id ="money2" name = "money" th:value = "${expenditureToUpdate.money}" /><br><br>
 						
+						
 							<font color = black>Category</font><br>
 						<select id ="category_id" name = "category_id">
-						    <option th:each="category : ${expenditureCategoryTab}" th:value="${category.id}" th:text= "${category.name}" ></option>
+						 	<option th:value="${expenditureCategoryTab[expenditureToUpdate.category_id-1].id}" th:text= "${expenditureCategoryTab[expenditureToUpdate.category_id-1].name}"  ></option>
+						    <option th:value="${expenditureCategoryTab[0].id}" th:text= "${expenditureCategoryTab[0].name}"  ></option>
+						    <option th:value="${expenditureCategoryTab[1].id}" th:text= "${expenditureCategoryTab[1].name}"  ></option>
+						    <option th:value="${expenditureCategoryTab[2].id}" th:text= "${expenditureCategoryTab[2].name}"  ></option>
+						    <option th:value="${expenditureCategoryTab[3].id}" th:text= "${expenditureCategoryTab[3].name}"  ></option>
+						    <option th:value="${expenditureCategoryTab[4].id}" th:text= "${expenditureCategoryTab[4].name}"  ></option>
+						    <option th:value="${expenditureCategoryTab[5].id}" th:text= "${expenditureCategoryTab[5].name}"  ></option>
+						    <option th:value="${expenditureCategoryTab[6].id}" th:text= "${expenditureCategoryTab[6].name}"  ></option>
+						    <option th:value="${expenditureCategoryTab[7].id}" th:text= "${expenditureCategoryTab[7].name}"  ></option>
+						    <option th:value="${expenditureCategoryTab[8].id}" th:text= "${expenditureCategoryTab[8].name}"  ></option>
+
 						</select><br><br>
 						
 							<font color = black>Date</font><br>

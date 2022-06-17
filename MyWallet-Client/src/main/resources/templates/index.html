@@ -3,26 +3,15 @@
 <head lang="en">
     <meta charset="UTF-8"/>
     <title>MyWallet</title>
-    <link rel="stylesheet" href="/indexStyle.css" />
+    <link rel="stylesheet" href="css/indexStyle.css" />
     
-    <script type = "text/javascript">
-	    
-		function getTime()
-		{
-			let date  = new Date();
-
-			document.getElementById("clock").innerHTML = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-			
-			document.getElementById("date").innerHTML = date.getDate() + "."+ date.getMonth()+1 + "." + date.getFullYear();	
-						
-			setTimeout("getTime()", 1000)
-		}
-	 
-    </script>
+	<script src="/js/timeAndDate.js"></script>
+	<script src="/js/setDateToForm.js"></script>
+	<script src="/js/startFunctions.js"></script>
     
     
 </head>
-<body onload="getTime();">
+<body onload="startFunctions();">
 	<div class="container">
 		<div class = "griditem1">
 			<h1 style="color: #4485b8;">
@@ -65,13 +54,12 @@
 						<input type = "number"  step="0.01" id ="money" name = "money" /><br><br>
 						
 							<font color = black>Category</font><br>
-							
 						<select id ="category_id" name = "category_id">
-						    <option th:each="category : ${expenditureCategoryTab}" th:value="${category.id}" th:text="${category.name}"></option>
+						    <option th:each="category : ${expenditureCategoryTab}" th:value="${category.id}" th:text="${category.id} + ${' - '} +${category.name}"></option>
 						</select><br><br>
 						
 							<font color = black>Date</font><br>
-						<input type = "date" id ="date" name = "date" /><br><br>
+						<input  type = "date" name = "date" id = "dateInput" /><br><br>
 						
 							<font color = black>Description</font><br>
 						<input type = "text" id ="description" name = "description"/><br><br>
@@ -85,7 +73,9 @@
 		
 		
 		<div class = "griditem4">	
-		<div class="square"></div>
+		
+			<div class="square"></div>
+			
 			<form th:action="@{filterByUser}" th:object = "${user}" method ="GET">
 						
 				<font color = black>Filter by user</font>

@@ -1,0 +1,5 @@
+function startFunctions()
+{
+	getTime();
+	setDateToForm();
+}
