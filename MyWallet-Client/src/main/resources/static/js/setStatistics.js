@@ -13,6 +13,7 @@
 		let table = document.createElement('table');
 		let thead = document.createElement('thead');
 		let tbody = document.createElement('tbody');
+		table.className = "statisticsTable";
 		
 		table.appendChild(thead);
 		table.appendChild(tbody);
@@ -35,6 +36,10 @@
 		
 		var expenditures = [];
 		    expenditures = getExpenditures();
+		
+		let categoryName=[];
+		let moneyByCat=[];
+		let i=0;
 		    
 		let moneyByCategory;
 		for ( let category of categories) {
@@ -51,12 +56,17 @@
 				row_data_1.innerHTML = category.name;
 				let row_data_2 = document.createElement('td');
 				row_data_2.innerHTML = moneyByCategory.toFixed(2);
-		
+				
+				categoryName[i] = category.name;
+				moneyByCat[i] = moneyByCategory.toFixed(2);
+				i++;
 				
 				row.appendChild(row_data_1);
 				row.appendChild(row_data_2);
 				tbody.appendChild(row);
 		    }
+		    
+		    createChartMoneyByCategory(categoryName, moneyByCat)
 	} 
 	
 	
@@ -66,6 +76,7 @@
 		let table = document.createElement('table');
 		let thead = document.createElement('thead');
 		let tbody = document.createElement('tbody');
+		table.className = "statisticsTable";
 		
 		table.appendChild(thead);
 		table.appendChild(tbody);
@@ -87,6 +98,10 @@
 		expenditures = getExpenditures();
 
 		let totalMoneySpend = 0;
+				
+		let monthNames=[];
+		let money=[];
+		let j=0;
 			
 		for ( let exp of expenditures) {
 		    totalMoneySpend += exp.money;
@@ -105,7 +120,8 @@
 		tbody.appendChild(row_2);
 		
 		var expenditures = [];
-		    expenditures = getExpenditures();
+		expenditures = getExpenditures();
+		
 		   
 		for (let i=0 ; i<12 ; i++)
 		{
@@ -134,8 +150,14 @@
 				row.appendChild(row_data_2);
 				tbody.appendChild(row);
 				
+				monthNames[j]=i;
+				money[j]=moneyByMonth.toFixed(2);
+				j++;
+				
 				}
 		}
+		
+		createChartMoneyByMonth(monthNames, money);
     
 	} 
 	

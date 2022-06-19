@@ -68,7 +68,12 @@ table.blueTable tfoot .links a{
 }
 
 form.formExpenditure {
+	padding-left:5em;
 	margin-left: 50px;
+}
+
+.fontForm{
+	padding-left:25px;
 }
 
 
@@ -87,7 +92,8 @@ form.formExpenditure {
 			
 
 .griditem3 { grid-area: center1; 
-			text-align: left;}
+			text-align: left;
+			background: white;}
 			
 			
 .griditem4 { grid-area: center2; 
@@ -100,15 +106,16 @@ form.formExpenditure {
 
 .griditem6 { grid-area: center4; 
 			 text-align: center;
-			 display: flex;
-			justify-content: center;
 			}
 			
 .griditem7 { grid-area: center5; 
 			 text-align: center;
-			 display: flex;
-			justify-content: center;
-			}		
+			}	
+				
+.griditem8 { grid-area: center6; 
+			 text-align: center;
+			 width: 100%;
+			}	
 
 		
 			
@@ -117,9 +124,10 @@ form.formExpenditure {
   grid-auto-flow: column;
   grid-template-areas: 	
 	  "header header header header header header header header header header"
-	  "left center1 center1 center1 center3 center3 center3 center3 center3 center3"
-	  "left center1 center1 center1 center4 center4 center4 center5 center5 center5"
-	  "left center1 center1 center1 center4 center4 center4 center5 center5 center5"
+	  "left center3 center3 center4 center4 center5 center5 center6 center6 center6"
+	  "left center3 center3 center4 center4 center5 center5 center6 center6 center6"
+	  "left center3 center3 center4 center4 center5 center5 center6 center6 center6"
+	  "center1 center1 center1 center1 center1 center1 center1 center1 center1 center1"
 	  "center2 center2 center2 center2 center2 center2 center2 center2 center2 center2"
 	  "center2 center2 center2 center2 center2 center2 center2 center2 center2 center2";
  background: linear-gradient(90deg, rgba(241,241,241,1) 0%, rgba(200,200,196,1) 49%, rgba(221,221,221,1) 100%);
@@ -129,3 +137,65 @@ form.formExpenditure {
 		  height: 5px;
 		  width: 100%;
 		  background-color: #000000;}
+		  
+.statisticsTable
+{
+  background-color: white;
+  width: 80%;
+  height: 80%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  align-content: center;
+  margin:25px;
+}
+
+.statisticsTable td, th {
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px;
+}
+
+.statisticsTable tbody tr:nth-child(odd) {
+  background: #fcd303;
+}
+
+.statisticsTable thead th {
+  font-size: 19px;
+  font-weight: bold;
+  color: #000000;
+  text-align: center;
+  border-left: 2px solid #D0E4F5;
+}
+
+.statisticsTable thead {
+color: White; 
+  background: #1C6EA4;
+  background: -moz-linear-gradient(top,#ffe100 0%, #ffc400 66%, #ffa600 100%);
+  background: -webkit-linear-gradient(top, #ffe100 0%, #ffc400 66%, #ffa600 100%);
+  background: linear-gradient(to bottom, #ffe100 0%, #ffc400 66%, #ffa600 100%);
+  border-bottom: 3px solid #444444;
+}
+
+.myWallet { 
+	grid-area: a1;
+	margin-left: 330px;
+	}	
+.clockAndDate { 
+	grid-area: a2; 
+	text-align: right;
+  	padding: 50px 50px;
+  	font-size: 19px;
+    font-weight: bold;
+     font-family: Arial, sans-serif;
+	}		
+.square { grid-area: a4; }
+
+.griditem1 {
+  display: grid;
+  grid-auto-flow: right;
+  grid-template-areas: 	
+	  "a1 a1 a1 a1 a1 a1 a1 a1 a2"
+	  "a1 a1 a1 a1 a1 a1 a1 a1 a2"
+	  "a4 a4 a4 a4 a4 a4 a4 a4 a4";
+}
+

@@ -16,9 +16,8 @@
 		if(second < 10) timeString += "0" + second;
 		else timeString += second;
 
-		document.getElementById("clock").innerHTML =  timeString;
-		
-		
+
+
 		let day = date.getDate();
 		let month = date.getMonth()+1;
 		let year = date.getFullYear();
@@ -33,7 +32,7 @@
 		
 		dateString += year;
 
-		document.getElementById("date").innerHTML =  dateString;	
+		document.getElementById("clockAndDate").innerHTML =  timeString + "<br>" + dateString;	
 					
 		setTimeout("setTimeAndDate()", 1000)
 	}
