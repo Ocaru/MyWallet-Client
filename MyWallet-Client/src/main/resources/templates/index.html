@@ -5,9 +5,28 @@
     <title>MyWallet</title>
     <link rel="stylesheet" href="css/indexStyle.css" />
     
-	<script src="/js/timeAndDate.js"></script>
+	<script src="/js/setTimeAndDate.js"></script>
 	<script src="/js/setDateToForm.js"></script>
 	<script src="/js/startFunctions.js"></script>
+    <script src="/js/setStatistics.js"></script>
+    
+    <script th:inline="javascript">
+    
+    function getExpenditures()
+    {
+	    /*<![CDATA[*/
+	   	return  /*[[${expenditureTab}]]*/ 'default';
+		/*]]>*/
+    }
+    
+    function getCategories()
+    {
+	    /*<![CDATA[*/
+	   	return  /*[[${expenditureCategoryTab}]]*/ 'default';
+		/*]]>*/
+    }
+ 
+	</script>
     
     
 </head>
@@ -44,7 +63,8 @@
 					
 						<font color = black>User</font><br>
 						<select id ="user_id" name = "user_id">
-						    <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.id} + ${' - '} + ${user.name} + ${' '} + ${user.surname} "></option>
+						    <option th:each="user : ${userList}" th:value="${user.id}" 
+						    th:text="${user.id} + ${' - '} + ${user.name} + ${' '} + ${user.surname} "></option>
 						</select><br><br>
 						
 							<font color = black>Name of expenditure</font><br>
@@ -55,7 +75,8 @@
 						
 							<font color = black>Category</font><br>
 						<select id ="category_id" name = "category_id">
-						    <option th:each="category : ${expenditureCategoryTab}" th:value="${category.id}" th:text="${category.id} + ${' - '} +${category.name}"></option>
+						    <option th:each="category : ${expenditureCategoryTab}" th:value="${category.id}"
+						     th:text="${category.id} + ${' - '} +${category.name}"></option>
 						</select><br><br>
 						
 							<font color = black>Date</font><br>
@@ -109,7 +130,7 @@
 				
 				<tbody>
 				
-				    <tr th:each="exp, expStat: ${expenditureList}">
+				    <tr th:each="exp, expStat: ${expenditureTab}">
 				    	<td th:text="${expStat.count}" style=" text-align:left;"></td>
 			            <td th:text="${exp.id}"></td>
 			            <td th:text="${exp.name}"></td>
@@ -142,9 +163,10 @@
 		
 		
 		<div class = "griditem5">	
-		
+			<h1 style="color:black;">Statistics</h1>
 		</div>
-		
+		<div class = "griditem6"  id = "tableMoneyByCategory"></div>
+		<div class = "griditem7"  id = "tableMoneyByMonth"></div>
 </div>
 
 </body>

@@ -25,10 +25,9 @@ public class ExpenditureController {
 	
 	@RequestMapping("/")
 	public String showHomePage(Model model) {
-		//expenditureList = rc.get("/expenditures", Expenditure.class);
 		
 		expenditureTab = rc.getExpenditures("/expenditures");
-		model.addAttribute("expenditureList", expenditureTab);
+		model.addAttribute("expenditureTab", expenditureTab);
 		
 		userList = rc.get("/users", User.class);
 		model.addAttribute("userList", userList);
@@ -36,10 +35,9 @@ public class ExpenditureController {
 		expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
 		model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
 		
-		
 		Expenditure expenditure = new Expenditure();
 		model.addAttribute("expenditure", expenditure);
-
+		
 		return "index";
 
 	}
@@ -100,6 +98,7 @@ public class ExpenditureController {
 		return "/expenditureUpdatePage";
 	}
 	
+	
 	@RequestMapping("/deleteExpenditure")
 	public String deleteExpenditure(@ModelAttribute("expenditure") Expenditure expenditure )
 	{
@@ -126,12 +125,9 @@ public class ExpenditureController {
 	{
 		 Expenditure[] expenditureTab;
 		 expenditureTab = rc.getExpenditures("/expenditures/user_id=" + user.getId());
-
-		 for (Expenditure expenditure : expenditureTab) {
-			System.out.println(expenditure);
-		}
 		 
-		 model.addAttribute("expenditureList", expenditureTab);
+		 model.addAttribute("expenditureTab", expenditureTab);
+		 
 		
 			userList = rc.get("/users", User.class);
 			model.addAttribute("userList", userList);
