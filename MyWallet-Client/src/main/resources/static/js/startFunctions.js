@@ -1,5 +1,6 @@
 function startFunctions()
 {
-	getTime();
+	setTimeAndDate();
 	setDateToForm();
+	setStatistics();
 }

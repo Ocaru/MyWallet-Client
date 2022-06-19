@@ -1,4 +1,4 @@
-    function getTime()
+    function setTimeAndDate()
 	{
 		let date  = new Date();
 
@@ -35,5 +35,5 @@
 
 		document.getElementById("date").innerHTML =  dateString;	
 					
-		setTimeout("getTime()", 1000)
+		setTimeout("setTimeAndDate()", 1000)
 	}
