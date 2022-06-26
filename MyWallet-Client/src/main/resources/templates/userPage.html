@@ -26,7 +26,7 @@
    				
    				<div id="date" style="text-align: center"></div><br>
 			  	
-				<a href="/">EXPENDITURES</a><br>
+				<a href="/showExpenditures">EXPENDITURES</a><br>
 				<a href="empty">ABOUT</a><br><br>
 
 				<button onclick="history.back()" style="align-items: center">BACK</button>	
@@ -36,15 +36,21 @@
    				
 					<form class = "formUser" th:action="@{saveUser}" th:object = "${user}" method ="POST">
 						
-						<h1 style="color:black;">Enter user</h1><br>
+						<h1>Enter user</h1><br>
 					
 						<input type ="hidden" th:field = "*{id}"/>
 					
-						<font color = black>Name</font><br>
+						<font>Name</font><br>
 						<input type = "text" id ="name" name = "name" /><br><br>
 						
-						<font color = black>Surname</font><br>
+						<font>Surname</font><br>
 						<input type = "text" id ="surname" name = "surname" /><br><br>
+						
+						<font>Username</font><br>
+						<input type = "text" id ="username" name = "username" /><br><br>
+						
+						<font>Password</font><br>
+						<input type = "text" id ="password" name = "password" /><br><br>
 						
 						<font color = black>E-mail</font><br>
 						<input type = "text" id ="emial" name = "email" /><br><br>		
@@ -61,9 +67,12 @@
 				<thead>
 					<tr style="height: 30px;">
 					<td style="height: 30px; max-width: 50px; ">IDENTIFICATION NUMBER</td>
-					<td style="height: 30px; width: 400px;">NAME</td>
-					<td style="height: 30px; width: 400px;">SURNAME</td>
-					<td style="height: 30px; width: 400px;">EMAIL</td>
+					<td style="height: 30px; width: 200px;">NAME</td>
+					<td style="height: 30px; width: 200px;">SURNAME</td>
+					<td style="height: 30px; width: 200px;">EMAIL</td>
+					<td style="height: 30px; width: 200px;">USERNAME</td>
+					<td style="height: 30px; width: 300px;">PASSWORD</td>
+					<td style="height: 30px; width: 100px;">ROLES</td>
 					<td style="height: 30px; max-width: 10px;"></td>
 					<td style="height: 30px; max-width: 10px;"></td>
 					</tr>
@@ -76,7 +85,11 @@
 			            <td th:text="${user.name}"></td>
 			            <td th:text="${user.surname}"></td>
 			            <td th:text="${user.email}"></td>
-			            			            <td>
+			            <td th:text="${user.username}"></td>
+			            <td th:text="${user.password}"></td>
+			            <td th:text="${user.userRoles}"></td>
+			            
+			            <td>
 			            	<form th:action = "@{/setUserToUpdate}" th:object = "${user}">
 			            		<input type = "hidden" th:value = "${user.id}" id="id" name = "id" />
 			            		<input type = "submit" value = "Update" />

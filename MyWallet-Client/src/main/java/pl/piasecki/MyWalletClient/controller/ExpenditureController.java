@@ -2,6 +2,7 @@ package pl.piasecki.MyWalletClient.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import pl.piasecki.MyWalletClient.RestClient;
+import pl.piasecki.MyWalletClient.configuration.LoginDTO;
 import pl.piasecki.MyWalletClient.model.Expenditure;
 import pl.piasecki.MyWalletClient.model.ExpenditureCategory;
 import pl.piasecki.MyWalletClient.model.User;
@@ -18,19 +20,64 @@ import pl.piasecki.MyWalletClient.model.User;
 @Controller
 public class ExpenditureController {
 
-	private List<User> userList;
+	private User[] userTab;
 	private ExpenditureCategory[] expenditureCategoryTab;
 	private Expenditure[] expenditureTab;
-	private RestClient rc = new RestClient();
+	
+	@Autowired
+	private RestClient rc;
+	private LoginDTO ld;
+	
 	
 	@RequestMapping("/")
-	public String showHomePage(Model model) {
+	public String showLoginPage(Model model) {
+		
+		model.addAttribute("loginCredentials", ld);
+		return "login";
+
+	}
+	
+	@RequestMapping("/home")
+	public String login(@ModelAttribute("loginDTO") LoginDTO ld, Model model) {
+		
+		JsonMapper mapper = new JsonMapper();
+		String loginDtoJSON = ""; 
+		try {
+			loginDtoJSON = mapper.writeValueAsString(ld);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		rc.authorization(loginDtoJSON);
 		
 		expenditureTab = rc.getExpenditures("/expenditures");
 		model.addAttribute("expenditureTab", expenditureTab);
 		
-		userList = rc.get("/users", User.class);
-		model.addAttribute("userList", userList);
+		userTab = rc.getUsers("/users");
+		model.addAttribute("userList", userTab);
+		
+		expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
+		model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
+		
+		Expenditure expenditure = new Expenditure();
+		model.addAttribute("expenditure", expenditure);
+		
+		return "index";
+
+	}
+	
+	
+	
+	
+	@RequestMapping("/showExpenditures")
+	public String showExpenditures(Model model) {
+		
+		
+		expenditureTab = rc.getExpenditures("/expenditures");
+		model.addAttribute("expenditureTab", expenditureTab);
+		
+		userTab = rc.getUsers("/users");
+		model.addAttribute("userList", userTab);
 		
 		expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
 		model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
@@ -56,7 +103,7 @@ public class ExpenditureController {
 		}
 		rc.post("/expenditures", expenditureJSON);
 		
-		return "redirect:/";
+		return "redirect:/showExpenditures";
 	}
 	
 
@@ -76,7 +123,7 @@ public class ExpenditureController {
 		}
 		rc.put("/expenditures", expenditureJSON);
 		
-		return "redirect:/";
+		return "redirect:/showExpenditures";
 	}
 	
 	
@@ -116,7 +163,7 @@ public class ExpenditureController {
 		
 		rc.delete("/expenditures/" + tempExpenditure.getId());
 		
-		return "redirect:/";
+		return "redirect:/showExpenditures";
 	}
 	
 	
@@ -129,8 +176,8 @@ public class ExpenditureController {
 		 model.addAttribute("expenditureTab", expenditureTab);
 		 
 		
-			userList = rc.get("/users", User.class);
-			model.addAttribute("userList", userList);
+			userTab = rc.getUsers("/users");
+			model.addAttribute("userList", userTab);
 			
 			Expenditure expenditure = new Expenditure();
 			model.addAttribute("expenditure", expenditure);

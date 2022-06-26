@@ -8,12 +8,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import pl.piasecki.MyWalletClient.model.Expenditure;
 import pl.piasecki.MyWalletClient.model.ExpenditureCategory;
+import pl.piasecki.MyWalletClient.model.Role;
 import pl.piasecki.MyWalletClient.model.User;
+import pl.piasecki.MyWalletClient.model.UserRole;
 
+@Component
 public class RestClient {
 
   private String server = "http://localhost:8080";
@@ -29,6 +33,28 @@ public class RestClient {
   }
 
 
+  
+  public void authorization (String json)
+  {
+	  	
+	  	HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
+	    
+	    ResponseEntity<String> response = new RestTemplate().exchange(server + "/login", HttpMethod.POST, requestEntity, String.class);
+	    
+	    this.setStatus(response.getStatusCode());
+	    
+	    String JwtToken = response.getHeaders().get("Authorization").toString();
+	    JwtToken = JwtToken.substring(1, JwtToken.length() - 1);
+	    headers.set("Authorization", JwtToken);
+	    
+	    //System.out.println("\n\n\n" + json + "\n\n\n");
+	    //System.out.println(response.getHeaders() + "\n\n");
+	    //System.out.println(JwtToken + "\n\n");
+	    //System.out.println(headers + "\n\n");
+		 
+  }
+
+ 
   public <T> List<T> get(String uri, Class<T> klazz) {
 	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
 	    ResponseEntity<List<T>> responseEntity;
@@ -46,7 +72,6 @@ public class RestClient {
   
   
   public Expenditure[] getExpenditures(String uri) {
-	  
 	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
 	    ResponseEntity<Expenditure[]> responseEntity;
 	    
@@ -77,6 +102,23 @@ public class RestClient {
 	    
 	  }
   
+  public User getUser(String uri) {
+	  
+	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+	    ResponseEntity<User> responseEntity;
+	    
+	    responseEntity = rest.exchange(
+	    		server + uri, 
+	    		HttpMethod.GET, 
+	    		requestEntity,
+	    		User.class);
+	    
+	    this.setStatus(responseEntity.getStatusCode());
+	    return responseEntity.getBody();
+	    
+	  }
+
+  
   
   public ExpenditureCategory[] getExpenditureCategory(String uri) {
 	  
@@ -93,8 +135,56 @@ public class RestClient {
 	    return responseEntity.getBody();
 	    
 	  }
+  
+  public Role[] getRoles(String uri) {
+	  
+	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+	    ResponseEntity<Role[]> responseEntity;
+	    
+	    responseEntity = rest.exchange(
+	    		server + uri, 
+	    		HttpMethod.GET, 
+	    		requestEntity,
+	    		Role[].class);
+	    
+	    this.setStatus(responseEntity.getStatusCode());
+	    return responseEntity.getBody();
+	    
+	  }
+  
+  public UserRole[] getUserRoles(String uri) {
+	  
+	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+	    ResponseEntity<UserRole[]> responseEntity;
+	    
+	    responseEntity = rest.exchange(
+	    		server + uri, 
+	    		HttpMethod.GET, 
+	    		requestEntity,
+	    		UserRole[].class);
+	    
+	    this.setStatus(responseEntity.getStatusCode());
+	    return responseEntity.getBody();
+	    
+	  }
+  
+  public UserRole getUserRole(String uri) {
+	  
+	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+	    ResponseEntity<UserRole> responseEntity;
+	    
+	    responseEntity = rest.exchange(
+	    		server + uri, 
+	    		HttpMethod.GET, 
+	    		requestEntity,
+	    		UserRole.class);
+	    
+	    this.setStatus(responseEntity.getStatusCode());
+	    return responseEntity.getBody();
+	    
+	  }
 
-  public String post(String uri, String json) {   
+  public String post(String uri, String json) {
     HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
     ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.POST, requestEntity, String.class);
     this.setStatus(responseEntity.getStatusCode());
