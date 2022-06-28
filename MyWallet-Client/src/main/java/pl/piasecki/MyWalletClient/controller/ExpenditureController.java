@@ -1,7 +1,5 @@
 package pl.piasecki.MyWalletClient.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,92 +35,56 @@ public class ExpenditureController {
 
 	}
 	
+	
 	@RequestMapping("/home")
-	public String login(@ModelAttribute("loginDTO") LoginDTO ld, Model model) {
+	public String login(@ModelAttribute("loginDTO") LoginDTO loginDto, Model model) {
 		
 		JsonMapper mapper = new JsonMapper();
 		String loginDtoJSON = ""; 
 		try {
-			loginDtoJSON = mapper.writeValueAsString(ld);
+			loginDtoJSON = mapper.writeValueAsString(loginDto);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
 
 		rc.authorization(loginDtoJSON);
 		
-		expenditureTab = rc.getExpenditures("/expenditures");
-		model.addAttribute("expenditureTab", expenditureTab);
-		
-		userTab = rc.getUsers("/users");
-		model.addAttribute("userList", userTab);
-		
-		expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
-		model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
-		
-		Expenditure expenditure = new Expenditure();
-		model.addAttribute("expenditure", expenditure);
+		addExpendituresToModel(model);
+		addUsersToModel(model);
+		addCategoriesToModel(model);
+		addNewExpenditureToModel(model);
 		
 		return "index";
 
 	}
-	
-	
 	
 	
 	@RequestMapping("/showExpenditures")
 	public String showExpenditures(Model model) {
 		
-		
-		expenditureTab = rc.getExpenditures("/expenditures");
-		model.addAttribute("expenditureTab", expenditureTab);
-		
-		userTab = rc.getUsers("/users");
-		model.addAttribute("userList", userTab);
-		
-		expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
-		model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
-		
-		Expenditure expenditure = new Expenditure();
-		model.addAttribute("expenditure", expenditure);
+		addExpendituresToModel(model);
+		addUsersToModel(model);
+		addCategoriesToModel(model);
+		addNewExpenditureToModel(model);
 		
 		return "index";
 
 	}
 	
-
 	
 	@RequestMapping("/saveExpenditure")
 	public String saveNewExpenditure(@ModelAttribute("expenditure") Expenditure expenditure )
 	{
-		JsonMapper mapper = new JsonMapper();
-		String expenditureJSON = ""; 
-		try {
-			expenditureJSON = mapper.writeValueAsString(expenditure);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		rc.post("/expenditures", expenditureJSON);
-		
+		String expenditureJson = mapToJson(expenditure);
+		rc.post("/expenditures", expenditureJson);
 		return "redirect:/showExpenditures";
 	}
-	
-
-	
-	
-
 	
 	@RequestMapping("/updateExpenditure")
 	public String updateExpenditure(@ModelAttribute("expenditure") Expenditure expenditure )
 	{
-		JsonMapper mapper = new JsonMapper();
-		String expenditureJSON = "";
-		try {
-			expenditureJSON = mapper.writeValueAsString(expenditure);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		rc.put("/expenditures", expenditureJSON);
-		
+		String expenditureJson = mapToJson(expenditure);
+		rc.put("/expenditures", expenditureJson);
 		return "redirect:/showExpenditures";
 	}
 	
@@ -131,16 +93,12 @@ public class ExpenditureController {
 	public String setExpenditureToUpdate(@ModelAttribute("expenditure") Expenditure expenditure, Model model )
 	{
 		 Expenditure[] exps = rc.getExpenditures("/expenditures");
-		 
 		 for (Expenditure exp : exps) {
-				if(exp.getId() == expenditure.getId())
-				{
-					model.addAttribute("expenditureToUpdate", exp);
-				} 
-			
+			if(exp.getId() == expenditure.getId())
+				model.addAttribute("expenditureToUpdate", exp);
 		}
-			expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
-			model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
+
+		addCategoriesToModel(model);
 		 
 		return "/expenditureUpdatePage";
 	}
@@ -149,20 +107,7 @@ public class ExpenditureController {
 	@RequestMapping("/deleteExpenditure")
 	public String deleteExpenditure(@ModelAttribute("expenditure") Expenditure expenditure )
 	{
-		
-		 Expenditure[] exps = rc.getExpenditures("/expenditures");
-		 Expenditure tempExpenditure = new Expenditure();
-		 
-		 for (Expenditure exp : exps) {
-				if(exp.getId() == expenditure.getId())
-				{
-					tempExpenditure = exp;
-					break;
-				} 
-		}
-		
-		rc.delete("/expenditures/" + tempExpenditure.getId());
-		
+		rc.delete("/expenditures/" + expenditure.getId());
 		return "redirect:/showExpenditures";
 	}
 	
@@ -170,27 +115,56 @@ public class ExpenditureController {
 	@RequestMapping("/filterByUser")
 	public String sortByUser(@ModelAttribute("user") User user, Model model )
 	{
-		 Expenditure[] expenditureTab;
-		 expenditureTab = rc.getExpenditures("/expenditures/user_id=" + user.getId());
+		Expenditure[] expenditureTab = rc.getExpenditures("/expenditures/user_id=" + user.getId());
+		model.addAttribute("expenditureTab", expenditureTab);
 		 
-		 model.addAttribute("expenditureTab", expenditureTab);
+		addUsersToModel(model);
+		addCategoriesToModel(model);
+		addNewExpenditureToModel(model);
 		 
-		
-			userTab = rc.getUsers("/users");
-			model.addAttribute("userList", userTab);
-			
-			Expenditure expenditure = new Expenditure();
-			model.addAttribute("expenditure", expenditure);
-			
-			expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
-			model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
-		
-		
 		return "index";
 	}
 	
 	
+	private void addUsersToModel(Model model)
+	{
+		userTab = rc.getUsers("/users");
+		model.addAttribute("userList", userTab);
+	}
 	
 	
-
+	private void addCategoriesToModel(Model model)
+	{
+		expenditureCategoryTab = rc.getExpenditureCategory("/expenditureCategories");
+		model.addAttribute("expenditureCategoryTab", expenditureCategoryTab);
+	}
+	
+	
+	private void addNewExpenditureToModel(Model model)
+	{
+		Expenditure expenditure = new Expenditure();
+		model.addAttribute("expenditure", expenditure);
+	}
+	
+	
+	private void addExpendituresToModel(Model model)
+	{
+		expenditureTab = rc.getExpenditures("/expenditures");
+		model.addAttribute("expenditureTab", expenditureTab);
+	}
+	
+	
+	private String mapToJson(Expenditure expenditure)
+	{
+		JsonMapper mapper = new JsonMapper();
+		try {
+			String json = mapper.writeValueAsString(expenditure);
+			return json;
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
+	
 }

@@ -44,10 +44,6 @@ public class UserController {
 		roleTab = rc.getRoles("/roles");
 		model.addAttribute("roleTab", roleTab);
 
-	
-		
-
-		
 		return "userPage";
 	}
 
@@ -90,6 +86,42 @@ public class UserController {
 		return "redirect:/userPage";
 	}
 	
+	
+	@RequestMapping("/setUserToUpdate")
+	public String setUserToUpdate(@ModelAttribute("user") User user, Model model )
+	{
+		 User[] users = rc.getUsers("/users");
+		 
+		 for (User u : users) {
+				if(u.getId() == user.getId())
+				{
+					model.addAttribute("userToUpdate", u);
+				} 
+			
+		}
+		 
+		return "updateUser";
+	}
+	
+	
+	
+	@RequestMapping("/updateUser")
+	public String updateUser(@ModelAttribute("user") User user )
+	{
+		String userJSON = getJson(user);
+		rc.put("/users", userJSON);
+		return "redirect:/userPage";
+	}
+	
+
+	@RequestMapping("/deleteUser")
+	public String deleteUser(@ModelAttribute("user") User user )
+	{
+		rc.delete("/users/" +  user.getId());
+		return "redirect:/userPage";
+	}
+	
+	
 	private String getJson(User user)
 	{
 		ObjectMapper mapper = new ObjectMapper();
@@ -114,54 +146,6 @@ public class UserController {
 		}
 		
 		return json; 
-	}
-	
-	
-	
-	
-	@RequestMapping("/setUserToUpdate")
-	public String setUserToUpdate(@ModelAttribute("user") User user, Model model )
-	{
-		 User[] users = rc.getUsers("/users");
-		 
-		 for (User u : users) {
-				if(u.getId() == user.getId())
-				{
-					model.addAttribute("userToUpdate", u);
-				} 
-			
-		}
-		 
-		return "updateUser";
-	}
-	
-	
-	
-	@RequestMapping("/updateUser")
-	public String updateUser(@ModelAttribute("user") User user )
-	{
-		JsonMapper mapper = new JsonMapper();
-		String userJSON = "";
-		try {
-			userJSON = mapper.writeValueAsString(user);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		rc.put("/users", userJSON);
-		
-		return "redirect:/userPage";
-	}
-	
-	
-
-	
-	@RequestMapping("/deleteUser")
-	public String deleteUser(@ModelAttribute("user") User user )
-	{
-
-		rc.delete("/users/" +  user.getId());
-		
-		return "redirect:/userPage";
 	}
 	
 }
