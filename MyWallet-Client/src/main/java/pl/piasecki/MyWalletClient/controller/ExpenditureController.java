@@ -20,7 +20,7 @@ public class ExpenditureController {
 
 	private User[] userTab;
 	private ExpenditureCategory[] expenditureCategoryTab;
-	private Expenditure[] expenditureTab;
+	private Expenditure[] expenditureTab; 
 	
 	@Autowired
 	private RestClient rc;
@@ -53,7 +53,7 @@ public class ExpenditureController {
 		addUsersToModel(model);
 		addCategoriesToModel(model);
 		addNewExpenditureToModel(model);
-		
+		addLoggedInUserToModel(model);
 		return "index";
 
 	}
@@ -66,6 +66,7 @@ public class ExpenditureController {
 		addUsersToModel(model);
 		addCategoriesToModel(model);
 		addNewExpenditureToModel(model);
+		addLoggedInUserToModel(model);
 		
 		return "index";
 
@@ -99,7 +100,7 @@ public class ExpenditureController {
 		}
 
 		addCategoriesToModel(model);
-		 
+		addLoggedInUserToModel(model);
 		return "/expenditureUpdatePage";
 	}
 	
@@ -121,6 +122,7 @@ public class ExpenditureController {
 		addUsersToModel(model);
 		addCategoriesToModel(model);
 		addNewExpenditureToModel(model);
+		addLoggedInUserToModel(model);
 		 
 		return "index";
 	}
@@ -153,6 +155,10 @@ public class ExpenditureController {
 		model.addAttribute("expenditureTab", expenditureTab);
 	}
 	
+	private void addLoggedInUserToModel(Model model)
+	{
+		model.addAttribute("loggedInUser", rc.getUser("/users/loggedIn"));
+	}
 	
 	private String mapToJson(Expenditure expenditure)
 	{

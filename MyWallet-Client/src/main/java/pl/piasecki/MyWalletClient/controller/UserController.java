@@ -43,6 +43,8 @@ public class UserController {
 		
 		roleTab = rc.getRoles("/roles");
 		model.addAttribute("roleTab", roleTab);
+		
+		addLoggedInUserToModel(model);
 
 		return "userPage";
 	}
@@ -99,7 +101,7 @@ public class UserController {
 				} 
 			
 		}
-		 
+		addLoggedInUserToModel(model);
 		return "updateUser";
 	}
 	
@@ -146,6 +148,11 @@ public class UserController {
 		}
 		
 		return json; 
+	}
+	
+	private void addLoggedInUserToModel(Model model)
+	{
+		model.addAttribute("loggedInUser", rc.getUser("/users/loggedIn"));
 	}
 	
 }

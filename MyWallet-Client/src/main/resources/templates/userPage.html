@@ -6,30 +6,40 @@
     <link rel="stylesheet" href="css/userPageStyle.css" />
     
     
-<script src="/js/setTimeAndDate.js"></script>
+	<script src="/js/setTimeAndDate.js"></script>
+	<script src="/js/startFunctionsUserPage.js"></script>
     
 </head>
-<body onload="setTimeAndDate();">
+<body onload="startFunctionsUserPage();">
 	<div class="container">
 		<div class = "griditem1">
-			<h1 style="color: #4485b8;">
-				<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
-			</h1>
-			<h4>User panel</h4>
+			<div class = "myWallet">
+				<h1 style="color: #4485b8;">
+					<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
+				</h1>
+				<h4>User panel</h4>
+			</div>
+			
+			<div id="clockAndDate" class = "clockAndDate" ></div>
+			  
+			<div class = "loggedInUser" >
+   				Witaj <label th:text="${loggedInUser.name}" ></label>
+	   			<label th:text="${loggedInUser.surname}" ></label>!<br>
+	   			(id: <label th:text="${loggedInUser.id}" ></label>
+	   			username: <label th:text="${loggedInUser.username}" ></label>)
+
+   			</div>
+
 			<div class="square"></div>
 		</div>
 
 		<div class = "griditem2">		
 		
-				<br>
-   				<div id="clock" style="text-align: center"></div>
-   				
-   				<div id="date" style="text-align: center"></div><br>
-			  	
-				<a href="/showExpenditures">EXPENDITURES</a><br>
-				<a href="empty">ABOUT</a><br><br>
+				<form action="/showExpenditures">
+    				<input type="submit" value="Expenditure page" />
+				</form>	
 
-				<button onclick="history.back()" style="align-items: center">BACK</button>	
+				<button onclick="history.back()">🡸</button>		
 		</div>
 		<div class = "griditem3">				
 				   
@@ -53,7 +63,8 @@
 						<input type = "text" id ="password" name = "password" /><br><br>
 						
 						<font color = black>E-mail</font><br>
-						<input type = "text" id ="emial" name = "email" /><br><br>		
+						<input type = "text" id ="email" name = "email" /><br><br>	
+							
 						
 						<input type = "submit" value="Save new user">
 			
@@ -87,8 +98,16 @@
 			            <td th:text="${user.email}"></td>
 			            <td th:text="${user.username}"></td>
 			            <td th:text="${user.password}"></td>
-			            <td th:text="${user.userRoles}"></td>
-			            
+			            <!--  <td th:text="${userRole.role.name}" th:each="userRole : ${user.userRoles}"></td>-->
+			            <td>
+		                    <table>
+		                        <tbody>
+		                            <tr th:each = "userRole : ${user.userRoles}">
+		                                <td th:text = "${userRole.role.name}"></td>
+		                            </tr>
+		                        </tbody>
+		                    </table>
+						</td>
 			            <td>
 			            	<form th:action = "@{/setUserToUpdate}" th:object = "${user}">
 			            		<input type = "hidden" th:value = "${user.id}" id="id" name = "id" />

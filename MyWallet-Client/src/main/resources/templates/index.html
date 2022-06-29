@@ -38,13 +38,21 @@
 		<div class = "griditem1">
 		
 			<div class = "myWallet">
-			<h1 style="color: #4485b8;">
-				<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
-			</h1>
-			<h4>Manage your expenditures!</h4>
+				<h1 style="color: #4485b8;">
+					<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
+				</h1>
+				<h4>Manage your expenditures!</h4>
 			</div>
 			
    			<div id="clockAndDate" class = "clockAndDate" ></div>
+   			
+   			<div class = "loggedInUser" >
+   				Witaj <label th:text="${loggedInUser.name}" ></label>
+	   			<label th:text="${loggedInUser.surname}" ></label>!<br>
+	   			(id: <label th:text="${loggedInUser.id}" ></label>
+	   			username: <label th:text="${loggedInUser.username}" ></label>)
+
+   			</div>
    			
    			
    			<div class="square"></div>

@@ -94,6 +94,46 @@ table.blueTable tfoot .links a{
 }
 
 .square {
-		  height: 5px;
-		  width: 100%;
-		  background-color: #000000;}
+	 height: 5px;
+	 width: 100%;
+	 background-color: #000000;}
+		  
+		  
+.myWallet { 
+	grid-area: a1;
+	text-align: center;
+	/*border: 1px solid RED;*/
+	}	
+	
+.clockAndDate { 
+	width: 200px;
+	grid-area: a2; 
+	text-align: right;
+  	padding: 50px 0px;
+  	font-size: 19px;
+    font-weight: bold;
+     font-family: Arial, sans-serif;
+     /*border: 1px solid #dfdfdf;*/
+	}	
+	
+.loggedInUser { 
+	width: 200px;
+	grid-area: a3; 
+	text-align: left;
+  	padding: 50px 10px;
+  	font-size: 13px;
+    font-weight: bold;
+     font-family: Arial, sans-serif;
+      /* border: 1px solid #dfdfdf;*/
+	}	
+		
+.square { grid-area: a4; }
+
+.griditem1 {
+  display: grid;
+  grid-auto-flow: right;
+  grid-template-areas: 	
+	  "a3 a1 a1 a1 a1 a1 a1 a1 a2"
+	  "a3 a1 a1 a1 a1 a1 a1 a1 a2"
+	  "a4 a4 a4 a4 a4 a4 a4 a4 a4";
+}
