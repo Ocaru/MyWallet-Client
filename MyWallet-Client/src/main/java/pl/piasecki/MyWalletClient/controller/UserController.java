@@ -29,15 +29,9 @@ public class UserController {
 	public String showUserPage( Model model)
 	{
 		
-		userTab = rc.getUsers("/users");
-		model.addAttribute("userList", userTab);
-	
-		User theUser = new User();
-		model.addAttribute("user", theUser);
-		
-		roleTab = rc.getRoles("/roles");
-		model.addAttribute("roleTab", roleTab);
-		
+		addUserListToModel(model);
+		addNewUserToModel(model);
+		addRolesToModel(model);
 		addLoggedInUserToModel(model);
 		
 		return "userPage";
@@ -78,6 +72,8 @@ public class UserController {
 				} 
 			
 		}
+		 
+		addUserListToModel(model);
 		addLoggedInUserToModel(model);
 		return "updateUser";
 	}
@@ -130,5 +126,23 @@ public class UserController {
 		model.addAttribute("loggedInUser", rc.getUser("/users/loggedIn"));
 	}
 	
+	private void addUserListToModel(Model model)
+	{
+		userTab = rc.getUsers("/users");
+		model.addAttribute("userList", userTab);
+	}
 	
+	private void addNewUserToModel(Model model)
+	{
+		User theUser = new User();
+		model.addAttribute("user", theUser);
+	}
+	
+	private void addRolesToModel(Model model)
+	{
+		roleTab = rc.getRoles("/roles");
+		model.addAttribute("roleTab", roleTab);
+	}
+	
+
 }

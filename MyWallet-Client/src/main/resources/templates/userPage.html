@@ -6,8 +6,18 @@
     <link rel="stylesheet" href="css/userPageStyle.css" />
     
 	<script src="/js/setTimeAndDate.js"></script>
+	<script src="/js/validateNewUserForm.js"></script>
 	<script src="/js/startFunctionsUserPage.js"></script>
-
+    <script th:inline="javascript">
+    
+    function getUsers()
+    {
+	    /*<![CDATA[*/
+	   	return  /*[[${userList}]]*/ 'default';
+		/*]]>*/
+    }
+ 
+	</script>
     
 </head>
 <body onload="startFunctionsUserPage();">
@@ -43,26 +53,27 @@
 		</div>
 		<div class = "griditem3">				
 				   
-					<form id = "formUser" class = "formUser" th:action="@{/saveUser}"  th:object = "${user}" method ="POST" >
+					<form id = "formUser" class = "formUser" th:action="@{/saveUser}"  th:object = "${user}"
+					 onsubmit="return validateNewUserForm()" method ="POST" >
 						
 						<h1>Enter user</h1><br>
 					
 						<input type ="hidden" th:field = "*{id}"/>
 					
 						<font>Name</font><br>
-						<input type = "text" id ="name" name = "name" /><br><br>
+						<input type = "text" id ="name" name = "name" required/><br><br>
 						
 						<font>Surname</font><br>
-						<input type = "text" id ="surname" name = "surname" /><br><br>
+						<input type = "text" id ="surname" name = "surname" required/><br><br>
 						
 						<font>Username</font><br>
-						<input type = "text" id ="username" name = "username" /><br><br>
+						<input type = "text" id ="username" name = "username" required/><br><br>
 						
 						<font>Password</font><br>
-						<input type = "text" id ="password" name = "password" /><br><br>
+						<input type = "text" id ="password" name = "password" required/><br><br>
 						
 						<font>E-mail</font><br>
-						<input type = "email" id ="email" name = "email" /><br><br>
+						<input type = "email" id ="email" name = "email" required/><br><br>
 						
 						<font>Roles</font><br>
 						<input type = "checkbox" name = "isAdmin" th:value = 1 />
