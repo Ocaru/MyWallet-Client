@@ -87,6 +87,15 @@ public class UserController {
 	@RequestMapping("/updateUser")
 	public String updateUser(@ModelAttribute("user") User user )
 	{
+		
+		roleTab = rc.getRoles("/roles");
+		
+		if(user.getIsAdmin() == 1 ){
+			user.addRole(roleTab[0]);
+			}
+		
+		user.addRole(roleTab[1]);
+		
 		String userJSON = getJson(user);
 		rc.put("/users", userJSON);
 		return "redirect:/userPage";

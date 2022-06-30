@@ -50,18 +50,30 @@
    				
 					<form class = "updateFormUser" th:action="@{updateUser}" th:object = "${userToUpdate}" method ="POST">
 							
-							<font  color = black>Identification number</font><br>
+						<font  color = black>Identification number</font><br>
 						<input type ="number" id ="id" name = "id" readonly="readonly" th:value = "${userToUpdate.id}" /> <br><br>
 					
-							<font  color = black>Name</font><br>
+						<font  color = black>Name</font><br>
 						<input type = "text" id ="name" name = "name" th:value = "${userToUpdate.name}" /><br><br>
 						
-							<font color = black>Surname</font><br>
+						<font color = black>Surname</font><br>
 						<input type = "text" id ="surname" name = "surname" th:value = "${userToUpdate.surname}" /><br><br>
 						
-							<font color = black>Email</font><br>
+						<font  color = black>Username</font><br>
+						<input type = "text" id ="username" name = "username" th:value = "${userToUpdate.username}" /><br><br>
+						
+						<font color = black>Password</font><br>
+						<input type = "text" id ="password" name = "password" th:value = "${userToUpdate.password}" /><br><br>
+						
+						<font color = black>Email</font><br>
 						<input type = "text" id ="email" name = "email" th:value = "${userToUpdate.email}" /><br><br>
 						
+						<font>Roles</font><br>
+						<input type = "checkbox" name = "isAdmin" th:value = 1 />
+						<font color = black>Admin</font><br>
+							
+						<input type = "checkbox" disabled="disabled" checked="checked"/>
+						<font color = black>User</font><br><br>
 						
 						<input type = "submit" value="Update user">
 			
@@ -78,7 +90,10 @@
 					<td style="height: 30px; width: 50px; ">IDENTIFICATION NUMBER</td>
 					<td style="height: 30px; width: 100px;">NAME</td>
 					<td style="height: 30px; width: 100px;">SURNAME</td>
+					<td style="height: 30px; width: 100px;">USERNAME</td>
+					<td style="height: 30px; width: 100px;">PASSWORD</td>
 					<td style="height: 30px; width: 100px;">EMAIL</td>
+					<td style="height: 30px; width: 100px;">ROLES</td>
 					</tr>
 				</thead>
 				
@@ -90,7 +105,17 @@
 			            <td th:text="${userToUpdate.name}"></td>
 			            <td th:text="${userToUpdate.surname}"></td>
 			            <td th:text="${userToUpdate.email}"></td>
-
+						<td th:text="${userToUpdate.username}"></td>
+			            <td th:text="${userToUpdate.password}"></td>
+						<td>
+		                    <table>
+		                        <tbody>
+		                            <tr th:each = "role : ${userToUpdate.roles}">
+		                                <td th:text = "${role.name}"></td>
+		                            </tr>
+		                        </tbody>
+		                    </table>
+						</td>
 			   		</tr>
 			   		          
 				</tbody>
