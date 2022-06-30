@@ -1,8 +1,11 @@
 package pl.piasecki.MyWalletClient.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 public class User {
@@ -14,27 +17,31 @@ public class User {
 	private String password;
 	private String email;
 	
+	@JsonIgnore
+	private int isAdmin = 0;
+	
+	@JsonIgnore
 	private List<Expenditure> expenditureList;
-
-	@JsonIgnoreProperties("user")
-	private Set<UserRole> userRoles; 
+	
+	@JsonIgnoreProperties("users")
+	private Set<Role> roles = new HashSet<Role>();
 
 	public User() {}
 	
 	public User(String name, String surname, String username, 
-			String password, String email, Set<UserRole> userRoles) {
+			String password, String email, Set<Role> roles) {
 		this.name = name;
 		this.surname = surname;
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.userRoles = userRoles;
+		this.roles = roles;
 	}
 
 	
-    public void addUserRoles(UserRole userRole) {
-        this.userRoles.add(userRole);
-        userRole.setUser(this);
+    public void addRole(Role role) {
+        roles.add(role);
+        role.addUser(this);
     }
 
     
@@ -78,12 +85,12 @@ public class User {
 		this.password = password;
 	}
 
-	public Set<UserRole> getUserRoles() {
-		return userRoles;
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
-	public void setUserRoles(Set<UserRole> userRoles) {
-		this.userRoles = userRoles;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 
 	public String getEmail() {
@@ -100,12 +107,31 @@ public class User {
 	public void setExpenditureList(List<Expenditure> expenditureList) {
 		this.expenditureList = expenditureList;
 	}
+	
+	public int getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(int isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", username=" + username + ", password="
-				+ password + ", email=" + email + ", expenditureList=" + expenditureList + ", userRoles=" + userRoles
+				+ password + ", email=" + email + ", expenditureList=" + expenditureList + ", roles=" + getRolesId().toString()
 				+ "]";
 	}
-
+	
+	private List<Long> getRolesId()
+	{
+		List<Long> roleIdList = new ArrayList<Long>();
+		
+		for (Role role : roles) {
+			roleIdList.add(role.getId());
+		}
+		
+		return roleIdList;
+	}
+	
 }

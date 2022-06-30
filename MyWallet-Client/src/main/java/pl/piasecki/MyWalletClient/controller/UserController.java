@@ -2,8 +2,6 @@ package pl.piasecki.MyWalletClient.controller;
 
 
 
-import java.util.HashSet;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,19 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import pl.piasecki.MyWalletClient.RestClient;
 import pl.piasecki.MyWalletClient.model.Role;
 import pl.piasecki.MyWalletClient.model.User;
-import pl.piasecki.MyWalletClient.model.UserRole;
 
 @Controller
 public class UserController {
 
 	private User[] userTab;
 	private Role[] roleTab;
-	private UserRole[] userRoles;
 	@Autowired
 	private RestClient rc;
 	
@@ -37,7 +32,6 @@ public class UserController {
 		userTab = rc.getUsers("/users");
 		model.addAttribute("userList", userTab);
 	
-		
 		User theUser = new User();
 		model.addAttribute("user", theUser);
 		
@@ -45,7 +39,7 @@ public class UserController {
 		model.addAttribute("roleTab", roleTab);
 		
 		addLoggedInUserToModel(model);
-
+		
 		return "userPage";
 	}
 
@@ -54,35 +48,18 @@ public class UserController {
 	public String saveNewUser(@ModelAttribute("user") User user)
 	{
 		String json = getJson(user); 
-		
 		rc.post("/users", json);				//SAVE USER
 		
 		roleTab = rc.getRoles("/roles");		//GET Roles
-		user = rc.getUser("/users/username=" + user.getUsername()); //GET USER
-		UserRole userRole = new UserRole(user, roleTab[1]);
+		User tempUser = rc.getUser("/users/username=" + user.getUsername()); //GET USER
 		
-		json = getJson(userRole);
-		rc.post("/userRoles", json);		//SAVE UserRole
+		if(user.getIsAdmin() == 1 ){
+			tempUser.addRole(roleTab[0]);
+			}
 		
-		UserRole[] userRolesTab = rc.getUserRoles("/userRoles");		//GET UserRoles
+		tempUser.addRole(roleTab[1]);
 		
-		for (UserRole uRole : userRolesTab) {
-			if(uRole.getIdUser() == userRole.getIdUser() && uRole.getIdRole() == userRole.getIdRole())
-				userRole = uRole;
-		}
-
-		userRole.setUser(user);
-		userRole.setRole(roleTab[1]);	
-		
-		json = getJson(userRole);
-		rc.put("/userRoles", json);
-		
-		Set<UserRole> userRoleSet = new HashSet<UserRole>();
-		userRoleSet.add(userRole);
-		
-		user.setUserRoles(userRoleSet);
-		
-		json = getJson(user);
+		json = getJson(tempUser);
 		rc.put("/users", json);
 
 		return "redirect:/userPage";
@@ -122,6 +99,7 @@ public class UserController {
 		rc.delete("/users/" +  user.getId());
 		return "redirect:/userPage";
 	}
+
 	
 	
 	private String getJson(User user)
@@ -137,22 +115,11 @@ public class UserController {
 		return json; 
 	}
 	
-	private String getJson(UserRole userRole)
-	{
-		ObjectMapper mapper = new ObjectMapper();
-		String json = ""; 
-		try {
-			json = mapper.writeValueAsString(userRole);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		
-		return json; 
-	}
 	
 	private void addLoggedInUserToModel(Model model)
 	{
 		model.addAttribute("loggedInUser", rc.getUser("/users/loggedIn"));
 	}
+	
 	
 }

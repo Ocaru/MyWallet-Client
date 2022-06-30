@@ -5,9 +5,9 @@
     <title>MyWallet</title>
     <link rel="stylesheet" href="css/userPageStyle.css" />
     
-    
 	<script src="/js/setTimeAndDate.js"></script>
 	<script src="/js/startFunctionsUserPage.js"></script>
+
     
 </head>
 <body onload="startFunctionsUserPage();">
@@ -43,8 +43,7 @@
 		</div>
 		<div class = "griditem3">				
 				   
-   				
-					<form class = "formUser" th:action="@{saveUser}" th:object = "${user}" method ="POST">
+					<form id = "formUser" class = "formUser" th:action="@{/saveUser}"  th:object = "${user}" method ="POST" >
 						
 						<h1>Enter user</h1><br>
 					
@@ -62,9 +61,16 @@
 						<font>Password</font><br>
 						<input type = "text" id ="password" name = "password" /><br><br>
 						
-						<font color = black>E-mail</font><br>
-						<input type = "text" id ="email" name = "email" /><br><br>	
+						<font>E-mail</font><br>
+						<input type = "email" id ="email" name = "email" /><br><br>
+						
+						<font>Roles</font><br>
+						<input type = "checkbox" name = "isAdmin" th:value = 1 />
+						<font color = black>Admin</font><br>
 							
+						<input type = "checkbox" disabled="disabled" checked="checked"/>
+						<font color = black>User</font><br><br>
+						
 						
 						<input type = "submit" value="Save new user">
 			
@@ -102,8 +108,8 @@
 			            <td>
 		                    <table>
 		                        <tbody>
-		                            <tr th:each = "userRole : ${user.userRoles}">
-		                                <td th:text = "${userRole.role.name}"></td>
+		                            <tr th:each = "role : ${user.roles}">
+		                                <td th:text = "${role.name}"></td>
 		                            </tr>
 		                        </tbody>
 		                    </table>

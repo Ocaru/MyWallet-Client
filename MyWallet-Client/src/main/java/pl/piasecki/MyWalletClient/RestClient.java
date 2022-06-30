@@ -15,7 +15,6 @@ import pl.piasecki.MyWalletClient.model.Expenditure;
 import pl.piasecki.MyWalletClient.model.ExpenditureCategory;
 import pl.piasecki.MyWalletClient.model.Role;
 import pl.piasecki.MyWalletClient.model.User;
-import pl.piasecki.MyWalletClient.model.UserRole;
 
 @Component
 public class RestClient {
@@ -32,11 +31,7 @@ public class RestClient {
     headers.add("Accept", "*/*");
   }
 
-
-  
-  public void authorization (String json)
-  {
-	  	
+  public void authorization (String json){
 	  	HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
 	    
 	    ResponseEntity<String> response = new RestTemplate().exchange(server + "/login", HttpMethod.POST, requestEntity, String.class);
@@ -45,13 +40,8 @@ public class RestClient {
 	    
 	    String JwtToken = response.getHeaders().get("Authorization").toString();
 	    JwtToken = JwtToken.substring(1, JwtToken.length() - 1);
-	    headers.set("Authorization", JwtToken);
-	    
-	    //System.out.println("\n\n\n" + json + "\n\n\n");
-	    //System.out.println(response.getHeaders() + "\n\n");
-	    //System.out.println(JwtToken + "\n\n");
-	    //System.out.println(headers + "\n\n");
-		 
+	    headers.set("Authorization", JwtToken);  	 
+  
   }
 
  
@@ -68,7 +58,7 @@ public class RestClient {
 	    this.setStatus(responseEntity.getStatusCode());
 	    return responseEntity.getBody();
 	    
-	  }
+  }
   
   
   public Expenditure[] getExpenditures(String uri) {
@@ -84,7 +74,8 @@ public class RestClient {
 	    this.setStatus(responseEntity.getStatusCode());
 	    return responseEntity.getBody();
 	    
-	  }
+  }
+  
   
   public User[] getUsers(String uri) {
 	  
@@ -100,7 +91,8 @@ public class RestClient {
 	    this.setStatus(responseEntity.getStatusCode());
 	    return responseEntity.getBody();
 	    
-	  }
+  }
+  
   
   public User getUser(String uri) {
 	  
@@ -116,9 +108,8 @@ public class RestClient {
 	    this.setStatus(responseEntity.getStatusCode());
 	    return responseEntity.getBody();
 	    
-	  }
+  }
 
-  
   
   public ExpenditureCategory[] getExpenditureCategory(String uri) {
 	  
@@ -134,7 +125,7 @@ public class RestClient {
 	    this.setStatus(responseEntity.getStatusCode());
 	    return responseEntity.getBody();
 	    
-	  }
+  }
   
   public Role[] getRoles(String uri) {
 	  
@@ -150,40 +141,9 @@ public class RestClient {
 	    this.setStatus(responseEntity.getStatusCode());
 	    return responseEntity.getBody();
 	    
-	  }
-  
-  public UserRole[] getUserRoles(String uri) {
-	  
-	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-	    ResponseEntity<UserRole[]> responseEntity;
-	    
-	    responseEntity = rest.exchange(
-	    		server + uri, 
-	    		HttpMethod.GET, 
-	    		requestEntity,
-	    		UserRole[].class);
-	    
-	    this.setStatus(responseEntity.getStatusCode());
-	    return responseEntity.getBody();
-	    
-	  }
-  
-  public UserRole getUserRole(String uri) {
-	  
-	    HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-	    ResponseEntity<UserRole> responseEntity;
-	    
-	    responseEntity = rest.exchange(
-	    		server + uri, 
-	    		HttpMethod.GET, 
-	    		requestEntity,
-	    		UserRole.class);
-	    
-	    this.setStatus(responseEntity.getStatusCode());
-	    return responseEntity.getBody();
-	    
-	  }
+  }
 
+  
   public String post(String uri, String json) {
     HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
     ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.POST, requestEntity, String.class);
