@@ -12,24 +12,25 @@ public class User {
 
 	private long id;
 	private String name;
-	private String surname; 
+	private String surname;
 	private String username;
 	private String password;
 	private String email;
-	
+
 	@JsonIgnore
 	private int isAdmin = 0;
-	
+
 	@JsonIgnore
 	private List<Expenditure> expenditureList;
-	
+
 	@JsonIgnoreProperties("users")
 	private Set<Role> roles = new HashSet<Role>();
 
-	public User() {}
-	
-	public User(String name, String surname, String username, 
-			String password, String email, Set<Role> roles) {
+	public User() {
+		
+	}
+
+	public User(String name, String surname, String username, String password, String email, Set<Role> roles) {
 		this.name = name;
 		this.surname = surname;
 		this.username = username;
@@ -38,37 +39,35 @@ public class User {
 		this.roles = roles;
 	}
 
-	
-    public void addRole(Role role) {
-        roles.add(role);
-        role.addUser(this);
-    }
+	public void addRole(Role role) {
+		roles.add(role);
+		role.addUser(this);
+	}
 
-    
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getSurname() {
 		return surname;
 	}
-	
+
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -96,10 +95,11 @@ public class User {
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public List<Expenditure> getExpenditureList() {
 		return expenditureList;
 	}
@@ -107,7 +107,7 @@ public class User {
 	public void setExpenditureList(List<Expenditure> expenditureList) {
 		this.expenditureList = expenditureList;
 	}
-	
+
 	public int getIsAdmin() {
 		return isAdmin;
 	}
@@ -119,19 +119,18 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", surname=" + surname + ", username=" + username + ", password="
-				+ password + ", email=" + email + ", expenditureList=" + expenditureList + ", roles=" + getRolesId().toString()
-				+ "]";
+				+ password + ", email=" + email + ", expenditureList=" + expenditureList + ", roles="
+				+ getRolesId().toString() + "]";
 	}
-	
-	private List<Long> getRolesId()
-	{
+
+	private List<Long> getRolesId() {
 		List<Long> roleIdList = new ArrayList<Long>();
-		
+
 		for (Role role : roles) {
 			roleIdList.add(role.getId());
 		}
-		
+
 		return roleIdList;
 	}
-	
+
 }

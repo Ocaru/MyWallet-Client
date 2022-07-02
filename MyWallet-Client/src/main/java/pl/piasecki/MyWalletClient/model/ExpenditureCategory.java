@@ -1,15 +1,14 @@
 package pl.piasecki.MyWalletClient.model;
 
 public class ExpenditureCategory {
-	
+
 	private long id;
 	private String name;
-	
-	public ExpenditureCategory()
-	{
+
+	public ExpenditureCategory() {
 		
 	}
-	
+
 	public ExpenditureCategory(long id, String name) {
 		this.id = id;
 		this.name = name;

@@ -1,131 +1,139 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-<head lang="en">
-    <meta charset="UTF-8"/>
-    <title>MyWallet</title>
-    <link rel="stylesheet" href="css/updatePageStyle.css" />
-    
-    
-	<script src="/js/setTimeAndDate.js"></script>
-	<script src="/js/startFunctionsUserPage.js"></script>
-    
-</head>
-<body onload="startFunctionsUserPage();">
-	<div class="container">
-		<div class = "griditem1">
-			<div class = "myWallet">
-				<h1 style="color: #4485b8;">
-					<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
-				</h1>
-				<h4>User panel</h4>
+	<head lang="en">
+	    <meta charset="UTF-8"/>
+	    <title>MyWallet</title>
+	    <link rel="stylesheet" href="css/updatePageStyle.css" />
+	    
+		<script src="/js/setTimeAndDate.js"></script>
+		<script src="/js/startFunctionsUserPage.js"></script>
+	    
+	</head>
+	<body onload="startFunctionsUserPage();">
+		<div class="container">
+			<div class="griditem1">
+				<div class="myWallet">
+					<h1 style="color: #4485b8;">
+						<span style="background-color: #000000; 
+						color: #ffffff; padding: 0 200px;">My Wallet</span>
+					</h1>
+					<h4>User panel</h4>
+				</div>
+				
+				<div id="clockAndDate" class="clockAndDate" ></div>
+				  
+				<div class="loggedInUser">
+	   				Witaj <label th:text="${loggedInUser.name}"></label>
+		   			<label th:text="${loggedInUser.surname}"></label>!<br>
+		   			(id: <label th:text="${loggedInUser.id}"></label>
+		   			username: <label th:text="${loggedInUser.username}"></label>)
+	
+	   			</div>
+				<div class="square"></div>
 			</div>
 			
-			<div id="clockAndDate" class = "clockAndDate" ></div>
-			  
-			<div class = "loggedInUser" >
-   				Witaj <label th:text="${loggedInUser.name}" ></label>
-	   			<label th:text="${loggedInUser.surname}" ></label>!<br>
-	   			(id: <label th:text="${loggedInUser.id}" ></label>
-	   			username: <label th:text="${loggedInUser.username}" ></label>)
-
-   			</div>
-			<div class="square"></div>
-		</div>
-		<div class = "griditem2">		
-			  	
-			  	<form action="/userPage">
-    				<input type="submit" value="User page" />
-				</form>	
-				<form action="/showExpenditures">
-    				<input type="submit" value="Expenditure page" />
-				</form>	
-
-				<button onclick="history.back()">🡸</button>	
-		</div>
-
-		
-		<div class = "griditem3">				
-				   <h1 style="color:black;">Update expenditure</h1><br>
-   				
-					<form class = "updateFormExpenditure" th:action="@{updateExpenditure}" th:object = "${expenditureToUpdate}" method ="POST">
-							
-							<font  color = black>Identification number</font><br>
-						<input type ="number" id ="id2" name = "id" readonly="readonly" th:value = "${expenditureToUpdate.id}" /> <br><br>
+			<div class="griditem2">		
+				  	
+				  	<form action="/userPage">
+	    				<input type="submit" value="User page"/>
+					</form>	
+					<form action="/showExpenditures">
+	    				<input type="submit" value="Expenditure page"/>
+					</form>	
+	
+					<button onclick="history.back()">🡸</button>	
+			</div>
+	
+			<div class="griditem3">				
+				<h1>Update expenditure</h1><br>
+	   				
+				<form class="updateFormExpenditure" th:action="@{updateExpenditure}" 
+				th:object="${expenditureToUpdate}" method="POST">
+						
+					<font>Identification number</font><br>
+					<input type="number" id="id2" name="id" readonly="readonly" 
+					th:value="${expenditureToUpdate.id}"/> <br><br>
+				
+					<font>User identification number</font><br>
+					<input type="number" id="user_id2" name="user_id" 
+					th:value="${expenditureToUpdate.user_id}" /><br><br>
 					
-							<font  color = black>User identification number</font><br>
-						<input type = "number" id ="user_id2" name = "user_id" th:value = "${expenditureToUpdate.user_id}" /><br><br>
-						
-							<font color = black>Name of expenditure</font><br>
-						<input type = "text" id ="name2" name = "name" th:value = "${expenditureToUpdate.name}" /><br><br>
-						
-							<font color = black>Money spent</font><br>
-						<input type = "number"  step="0.01" id ="money2" name = "money" th:value = "${expenditureToUpdate.money}" /><br><br>
-						
-						
-							<font color = black>Category</font><br>
-						<select id ="category_id" name = "category_id">
-						 	<option th:value="${expenditureCategoryTab[expenditureToUpdate.category_id-1].id}" th:text= "${expenditureCategoryTab[expenditureToUpdate.category_id-1].name}"  ></option>
-						    <option th:value="${expenditureCategoryTab[0].id}" th:text= "${expenditureCategoryTab[0].name}"  ></option>
-						    <option th:value="${expenditureCategoryTab[1].id}" th:text= "${expenditureCategoryTab[1].name}"  ></option>
-						    <option th:value="${expenditureCategoryTab[2].id}" th:text= "${expenditureCategoryTab[2].name}"  ></option>
-						    <option th:value="${expenditureCategoryTab[3].id}" th:text= "${expenditureCategoryTab[3].name}"  ></option>
-						    <option th:value="${expenditureCategoryTab[4].id}" th:text= "${expenditureCategoryTab[4].name}"  ></option>
-						    <option th:value="${expenditureCategoryTab[5].id}" th:text= "${expenditureCategoryTab[5].name}"  ></option>
-						    <option th:value="${expenditureCategoryTab[6].id}" th:text= "${expenditureCategoryTab[6].name}"  ></option>
-						    <option th:value="${expenditureCategoryTab[7].id}" th:text= "${expenditureCategoryTab[7].name}"  ></option>
-						    <option th:value="${expenditureCategoryTab[8].id}" th:text= "${expenditureCategoryTab[8].name}"  ></option>
-
-						</select><br><br>
-						
-							<font color = black>Date</font><br>
-						<input type = "date" id ="date" name = "date" th:value = "${expenditureToUpdate.date}"/><br><br>
-						
-						
-							<font color = black>Description</font><br>
-						<input type = "text" id ="description2" name = "description" th:value = "${expenditureToUpdate.description}"/><br><br>
-						
-						
-						<input type = "submit" value="Update expenditure">
-			
-					</form>
-					<br>
-		</div>
+					<font>Name of expenditure</font><br>
+					<input type="text" id="name2" name="name" 
+					th:value="${expenditureToUpdate.name}" /><br><br>
+					
+					<font>Money spent</font><br>
+					<input type="number"  step="0.01" id="money2" name="money" 
+					th:value="${expenditureToUpdate.money}" /><br><br>
+					
+					<font>Category</font><br>
+					<select id="category_id" name="category_id">
+					 	<option 
+					 	th:value="${expenditureCategoryTab[expenditureToUpdate.category_id-1].id}" 
+					 	th:text="${expenditureCategoryTab[expenditureToUpdate.category_id-1].name}"></option>
+					    <option th:value="${expenditureCategoryTab[0].id}" 
+					    th:text="${expenditureCategoryTab[0].name}"></option>
+					    <option th:value="${expenditureCategoryTab[1].id}" 
+					    th:text="${expenditureCategoryTab[1].name}"></option>
+					    <option th:value="${expenditureCategoryTab[2].id}" 
+					    th:text="${expenditureCategoryTab[2].name}"></option>
+					    <option th:value="${expenditureCategoryTab[3].id}" 
+					    th:text="${expenditureCategoryTab[3].name}"></option>
+					    <option th:value="${expenditureCategoryTab[4].id}" 
+					    th:text="${expenditureCategoryTab[4].name}"></option>
+					    <option th:value="${expenditureCategoryTab[5].id}" 
+					    th:text="${expenditureCategoryTab[5].name}"></option>
+					    <option th:value="${expenditureCategoryTab[6].id}" 
+					    th:text="${expenditureCategoryTab[6].name}"></option>
+					    <option th:value="${expenditureCategoryTab[7].id}" 
+					    th:text="${expenditureCategoryTab[7].name}"></option>
+					    <option th:value="${expenditureCategoryTab[8].id}" 
+					    th:text= "${expenditureCategoryTab[8].name}"></option>
+					</select><br><br>
+					
+					<font>Date</font><br>
+					<input type="date" id="date" name="date" 
+					th:value="${expenditureToUpdate.date}"/><br><br>
+					
+					<font>Description</font><br>
+					<input type="text" id="description2" name="description" 
+					th:value="${expenditureToUpdate.description}"/><br><br>
+					
+					<input type="submit" value="Update expenditure">
 		
-		<div class = "griditem4">	
-		<div class="square"></div>	
-			<table class="blueTable" style="vertical-align: top; height: 100px;">
+				</form>
+				<br>
+			</div>
+			
+			<div class="griditem4">	
+				<div class="square"></div>	
 				
-				<thead>
-					<tr style="height: 30px;">
-					<td style="height: 30px; width: 50px; ">IDENTIFICATION NUMBER</td>
-					<td style="height: 30px; width: 100px;">NAME</td>
-					<td style="height: 30px; width: 100px;">MONEY</td>
-					<td style="height: 30px; width: 100px;">CATEGORY</td>
-					<td style="height: 30px; width: 100px;">DATE</td>
-					<td style="height: 30px; width: 100px;">DESCRIPTION</td>
-					<td style="height: 30px; width: 100px;">USER ID</td>
-					</tr>
-				</thead>
+				<table class="blueTable" style="vertical-align: top; height: 100px;">
+					<thead style="height: 30px; width: 100px;">
+						<tr>
+							<td>IDENTIFICATION NUMBER</td>
+							<td>NAME</td>
+							<td>MONEY</td>
+							<td>CATEGORY</td>
+							<td>DATE</td>
+							<td>DESCRIPTION</td>
+							<td>USER ID</td>
+						</tr>
+					</thead>
+					<tbody>
+					    <tr>
+				            <td th:text="${expenditureToUpdate.id}"></td>
+				            <td th:text="${expenditureToUpdate.name}"></td>
+				            <td th:text="${expenditureToUpdate.money}"></td>
+				            <td th:text="${expenditureCategoryTab[expenditureToUpdate.category_id-1].name}"></td>
+				            <td th:text="${expenditureToUpdate.date}"></td>
+				            <td th:text="${expenditureToUpdate.description}"></td>
+				            <td th:text="${expenditureToUpdate.user_id}"></td>
+				   		</tr>         
+					</tbody>
+				</table>
 				
-				<tbody>
-				
-				    <tr>
-				    
-			            <td th:text="${expenditureToUpdate.id}"></td>
-			            <td th:text="${expenditureToUpdate.name}"></td>
-			            <td th:text="${expenditureToUpdate.money}"></td>
-			            <td th:text="${expenditureCategoryTab[expenditureToUpdate.category_id-1].name}"></td>
-			            <td th:text="${expenditureToUpdate.date}"></td>
-			            <td th:text="${expenditureToUpdate.description}"></td>
-			            <td th:text="${expenditureToUpdate.user_id}"></td>
-
-			   		</tr>
-			   		          
-				</tbody>
-				
-			</table>
+			</div>
 		</div>
-</div>
-
-</body>
+	</body>
 </html>

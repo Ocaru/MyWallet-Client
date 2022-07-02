@@ -4,8 +4,7 @@ import org.springframework.context.annotation.Configuration;
 
 import io.swagger.v3.oas.annotations.OpenAPI31;
 
-
-@OpenAPI31 //adnotacja do biblioteki ktora zawiera nowszą wersję swaggera
+@OpenAPI31 // swagger 3
 @Configuration
 public class Config {
 

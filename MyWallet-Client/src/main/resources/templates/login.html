@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Insert title here</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel="stylesheet" href="css/loginStyle.css">
-
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<div id="login-form-wrap">
-  <h2>Login</h2>
-  <form id="login-form"  th:action="@{home}" th:object = "${loginDTO}" method="POST">
-    <p>
-    	<input type="text" id="username" name="username" placeholder="Username" required><i class="validation"><span></span><span></span></i>
-    </p>
-     <p>
-    	<input type='password' name='password' id='password' required><i class="validation"><span></span><span></span></i>
-    </p>
-    <p>
-    	<input type="submit" id="login" value="Login">
-    </p>
-  </form>
-  <div id="create-account-wrap">
-    <p>Not a member? <a href="#">Create Account</a><p>
-  </div><!--create-account-wrap-->
-</div><!--login-form-wrap-->
-<!-- partial -->
-  
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+		<link rel="stylesheet" href="css/loginStyle.css">
+	</head>
+	
+	<body>
+		<div id="login-form-wrap">
+			<h2>Login</h2>
+			<form id="login-form" th:action="@{home}" th:object="${loginDTO}"
+				method="POST">
+				<p>
+					<input type="text" id="username" name="username"
+						placeholder="Username" required><i class="validation"><span></span><span></span></i>
+				</p>
+				<p>
+					<input type='password' name='password' id='password' required><i
+						class="validation"><span></span><span></span></i>
+				</p>
+				<p>
+					<input type="submit" id="login" value="Login">
+				</p>
+			</form>
+			<!--  
+			<div id="create-account-wrap">
+				<p>
+					Not a member? <a href="#">Create Account</a>
+				<p>
+			</div> 
+			-->
+		</div>
+	
+	</body>
 </html>

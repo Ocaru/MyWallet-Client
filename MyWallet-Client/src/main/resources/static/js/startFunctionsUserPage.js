@@ -1,5 +1,4 @@
-function startFunctionsUserPage()
-{
+function startFunctionsUserPage() {
 	setTimeAndDate();
 
 }

@@ -1,5 +1,4 @@
-function startFunctions()
-{
+function startFunctions() {
 	setTimeAndDate();
 	setDateToForm();
 	setStatistics();

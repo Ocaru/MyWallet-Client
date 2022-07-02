@@ -1,206 +1,187 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-<head lang="en">
-    <meta charset="UTF-8"/>
-    <title>MyWallet</title>
-    <link rel="stylesheet" href="css/indexStyle.css" />
-    
-	<script src="/js/setTimeAndDate.js"></script>
-	<script src="/js/setDateToForm.js"></script>
-	<script src="/js/startFunctions.js"></script>
-    <script src="/js/setStatistics.js"></script>
-    <script src="/js/createCharts.js"></script>
-    
-    <script th:inline="javascript">
-    
-    function getExpenditures()
-    {
-	    /*<![CDATA[*/
-	   	return  /*[[${expenditureTab}]]*/ 'default';
-		/*]]>*/
-    }
-    
-    function getCategories()
-    {
-	    /*<![CDATA[*/
-	   	return  /*[[${expenditureCategoryTab}]]*/ 'default';
-		/*]]>*/
-    }
- 
-	</script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-	
-	
-</head>
-<body onload="startFunctions();">
-	<div class="container">
-		<div class = "griditem1">
+	<head lang="en">
+		<meta charset="UTF-8" />
+		<title>MyWallet</title>
+		<link rel="stylesheet" href="css/indexStyle.css" />
 		
-			<div class = "myWallet">
-				<h1 style="color: #4485b8;">
-					<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
-				</h1>
-				<h4>Manage your expenditures!</h4>
+		<script src="/js/setTimeAndDate.js"></script>
+		<script src="/js/setDateToForm.js"></script>
+		<script src="/js/startFunctions.js"></script>
+		<script src="/js/setStatistics.js"></script>
+		<script src="/js/createCharts.js"></script>
+		<script th:inline="javascript">
+			function getExpenditures() {
+				/*<![CDATA[*/
+				return /*[[${expenditureTab}]]*/'default';
+				/*]]>*/
+			}
+		
+			function getCategories() {
+				/*<![CDATA[*/
+				return /*[[${expenditureCategoryTab}]]*/'default';
+				/*]]>*/
+			}
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+	
+	</head>
+	
+	<body onload="startFunctions();">
+		<div class="container">
+			<div class="griditem1">
+	
+				<div class="myWallet">
+					<h1 style="color: #4485b8;">
+						<span
+							style="background-color: #000000; 
+							color: #ffffff; padding: 0 200px;">MyWallet</span>
+					</h1>
+					<h4>Manage your expenditures!</h4>
+				</div>
+	
+				<div id="clockAndDate" class="clockAndDate"></div>
+	
+				<div class="loggedInUser">
+					Witaj <label th:text="${loggedInUser.name}"></label> 
+					<label th:text="${loggedInUser.surname}"></label>!<br> 
+					(id: <label th:text="${loggedInUser.id}"></label> 
+					username: <label th:text="${loggedInUser.username}"></label>)
+				</div>
+				<div class="square"></div>
 			</div>
-			
-   			<div id="clockAndDate" class = "clockAndDate" ></div>
-   			
-   			<div class = "loggedInUser" >
-   				Witaj <label th:text="${loggedInUser.name}" ></label>
-	   			<label th:text="${loggedInUser.surname}" ></label>!<br>
-	   			(id: <label th:text="${loggedInUser.id}" ></label>
-	   			username: <label th:text="${loggedInUser.username}" ></label>)
-
-   			</div>
-   			
-   			
-   			<div class="square"></div>
-		</div>
-
-		<div class = "griditem2">	
-		
-
-			  	
-			  	
-			  	<form action="/userPage">
-    				<input type="submit" value="User page" />
-				</form>	
-				
-				<!--<a href="/userPage">USERS</a><br>  -->
-				
-				<!--
+	
+			<div class="griditem2">
 				<form action="/userPage">
-    				<input type="submit" value="User page" />
+					<input type="submit" value="User page" />
 				</form>
-				<a href="empty">ABOUT</a><br><br>  
-				-->
-				
+				<button onclick="history.back()">🡸</button>
+			</div>
+	
+			<div class="griditem3">
 
-				<button onclick="history.back()">🡸</button>	
-		</div>
-		
-		<div class = "griditem3">				
-				   
-   				
-					<form class = "formExpenditure" th:action="@{saveExpenditure}" th:object = "${expenditure}" method ="POST">
-						<h2 style="color:black;">Enter next expenditure</h2>
+				<form class="formExpenditure" th:action="@{saveExpenditure}"
+					th:object="${expenditure}" method="POST">
+					<h2 style="color: black;">Enter next expenditure</h2>
+	
+					<input type="hidden" th:field="*{id}" /> 
 					
-						<input type ="hidden" th:field = "*{id}"/>
+					<font>User</font> 
+					<select id="user_id" name="user_id">
+						<option th:each="user : ${userList}" th:value="${user.id}"
+							th:text="${user.id} + ${' - '} + ${user.name} 
+							+ ${' '} + ${user.surname}"></option>
+					</select> 
 					
-						<font>User</font>
-						<select id ="user_id" name = "user_id">
-						    <option th:each="user : ${userList}" th:value="${user.id}" 
-						    th:text="${user.id} + ${' - '} + ${user.name} + ${' '} + ${user.surname} "></option>
-						</select>
-						
-							<font class ="fontForm">Name of expenditure</font>
-						<input type = "text" id ="name" name = "name" />
-						
-							<font class ="fontForm">Money spent</font>
-						<input type = "number"  step="0.01" id ="money" name = "money" />
-						
-							<font class ="fontForm">Category</font>
-						<select id ="category_id" name = "category_id">
-						    <option th:each="category : ${expenditureCategoryTab}" th:value="${category.id}"
-						     th:text="${category.id} + ${' - '} +${category.name}"></option>
-						</select>
-						
-							<font class ="fontForm">Date</font>
-						<input  type = "date" name = "date" id = "dateInput" />
-						
-							<font class ="fontForm">Description</font>
-						<input type = "text" id ="description" name = "description"/>
-						
-						
-						<input type = "submit" value="Save expenditure">
-			
-					</form>
-					<br>
-		</div>
-		
-		
-		<div class = "griditem4">	
-		
-			<div class="square"></div>
-			
-			<form th:action="@{filterByUser}" th:object = "${user}" method ="GET">
-						
-				<font color = black>Filter by user</font>
-				<select id ="id" name = "id">
-					<option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.id}" ></option>
-				</select>
+					<font class="fontForm">Name of expenditure</font> 
+					<input type="text" id="name" name="name" /> 
 					
-				<input type = "submit" value="Ok">
-			</form>
-			
-			<form th:action="@{/showExpenditures}" >
-				<input type = "submit" value="Reset">
-			</form>
-		
-			<table class="blueTable" style="vertical-align: top; height: 100px;">
-				
-				<thead>
-					<tr style = "height: 30px;">
-					<td style = "max-width: 50px;">NUMBER</td>
-					<td style = "max-width: 50px;">IDENTIFICATION NUMBER</td>
-					<td style = "width: 200px;">NAME</td>
-					<td style = "width: 100px;">MONEY</td>
-					<td style = "width: 100px;">CATEGORY</td>
-					<td style = "width: 100px;">DATE</td>
-					<td style = "width: 400px;">DESCRIPTION</td>
-					<td style = "max-width: 50px;">USER ID</td>
-					<td style = "max-width: 50px;"></td>
-					<td style = "max-width: 50px;"></td>
-					</tr>
-				</thead>
-				
-				<tbody>
-				
-				    <tr th:each="exp, expStat: ${expenditureTab}">
-				    	<td th:text="${expStat.count}" style=" text-align:left;"></td>
-			            <td th:text="${exp.id}"></td>
-			            <td th:text="${exp.name}"></td>
-			            <td th:text="${exp.money}"></td>
-			            <td th:text="${expenditureCategoryTab[exp.category_id-1].name}"></td>
-			            <td th:text="${exp.date}"></td>
-			            <td th:text="${exp.description}"></td>
-			            <td th:text="${exp.user_id}"></td>
-
-			            <td>
-			            	<form th:action = "@{/setExpenditureToUpdate}" th:object = "${expenditure}">
-			            		<input type = "hidden" th:value = "${exp.id}" id="id" name = "id" />
-			            		<input type = "submit" value = "Update" />
-
-			            	</form>
-			            </td>
-			            <td>
-			            	<form th:action = "@{/deleteExpenditure}" th:object = "${expenditure}">
-			            		<input type = "hidden" th:value = "${exp.id}" id="id" name = "id" />
-			            		<input type = "submit" value = "Delete" />
-
-			            	</form>
-			            </td>
-			   		</tr>
-			   		          
-				</tbody>
-				
-			</table>
+					<font class="fontForm">Money spent</font> 
+					<input type="number" step="0.01" id="money" name="money" />
+	
+					<font class="fontForm">Category</font> 
+					<select id="category_id" name="category_id">
+						<option th:each="category : ${expenditureCategoryTab}"
+							th:value="${category.id}" 
+							th:text="${category.id} + ${' - '} +${category.name}"></option>
+					</select> 
+					
+					<font class="fontForm">Date</font> 
+					<input type="date" name="date" id="dateInput" /> 
+					
+					<font class="fontForm">Description</font> 
+					<input type="text" id="description" name="description" /> 
+					
+					<input type="submit" value="Save expenditure">
+	
+				</form>
+				<br>
+			</div>
+	
+			<div class="griditem4">
+	
+				<div class="square"></div>
+	
+				<form th:action="@{filterByUser}" th:object="${user}" method="GET">
+	
+					<font color=black>Filter by user</font> 
+					<select id="id" name="id"> 
+						<option th:each="user : ${userList}" th:value="${user.id}"
+							th:text="${user.id}"></option>
+					</select> 
+					
+					<input type="submit" value="Ok">
+					
+				</form>
+	
+				<form th:action="@{/showExpenditures}">
+					<input type="submit" value="Reset">
+				</form>
+	
+				<table class="blueTable" style="vertical-align: top; height: 100px;">
+	
+					<thead>
+						<tr style="height: 30px;">
+							<td style="max-width: 50px;">NUMBER</td>
+							<td style="max-width: 50px;">IDENTIFICATION NUMBER</td>
+							<td style="width: 200px;">NAME</td>
+							<td style="width: 100px;">MONEY</td>
+							<td style="width: 100px;">CATEGORY</td>
+							<td style="width: 100px;">DATE</td>
+							<td style="width: 400px;">DESCRIPTION</td>
+							<td style="max-width: 50px;">USER ID</td>
+							<td style="max-width: 50px;"></td>
+							<td style="max-width: 50px;"></td>
+						</tr>
+					</thead>
+	
+					<tbody>
+	
+						<tr th:each="exp, expStat: ${expenditureTab}">
+							<td th:text="${expStat.count}" style="text-align: left;"></td>
+							<td th:text="${exp.id}"></td>
+							<td th:text="${exp.name}"></td>
+							<td th:text="${exp.money}"></td>
+							<td th:text="${expenditureCategoryTab[exp.category_id-1].name}"></td>
+							<td th:text="${exp.date}"></td>
+							<td th:text="${exp.description}"></td>
+							<td th:text="${exp.user_id}"></td>
+	
+							<td>
+								<form th:action="@{/setExpenditureToUpdate}"
+									th:object="${expenditure}">
+									<input type="hidden" th:value="${exp.id}" id="id" name="id" />
+									<input type="submit" value="Update" />
+								</form>
+							</td>
+							<td>
+								<form th:action="@{/deleteExpenditure}" th:object="${expenditure}">
+									<input type="hidden" th:value="${exp.id}" id="id" name="id" />
+									<input type="submit" value="Delete" />
+								</form>
+							</td>
+						</tr>
+	
+					</tbody>
+	
+				</table>
+			</div>
+	
+	
+			<div class="griditem5" id="tableMoneyByCategory"></div>
+	
+			<div class="griditem6">
+				<canvas id="chartMoneyByCategory"
+					style="max-width: 700px; max-height: 350px"></canvas>
+			</div>
+	
+			<div class="griditem7" id="tableMoneyByMonth"></div>
+	
+			<div class="griditem8" id="tableMoneyByCategory">
+				<canvas id="chartMoneyByMonth"
+					style="max-width: 700px; max-height: 350px"></canvas>
+			</div>
 		</div>
-		
-
-		<div class = "griditem5"  id = "tableMoneyByCategory"></div>
-		
-		<div class = "griditem6">
-			<canvas id="chartMoneyByCategory" style = " max-width:700px;  max-height:350px"></canvas>
-		</div>
-		
-		<div class = "griditem7"  id = "tableMoneyByMonth"></div>
-		
-		<div class = "griditem8"  id = "tableMoneyByCategory">
-			<canvas id="chartMoneyByMonth" style = " max-width:700px;  max-height:350px"></canvas>
-		</div>
-</div>
-
-</body>
+	
+	</body>
 </html>

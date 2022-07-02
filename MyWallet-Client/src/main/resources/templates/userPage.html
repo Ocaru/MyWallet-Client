@@ -1,151 +1,139 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-<head lang="en">
-    <meta charset="UTF-8"/>
-    <title>MyWallet</title>
-    <link rel="stylesheet" href="css/userPageStyle.css" />
-    
-	<script src="/js/setTimeAndDate.js"></script>
-	<script src="/js/validateNewUserForm.js"></script>
-	<script src="/js/startFunctionsUserPage.js"></script>
-    <script th:inline="javascript">
-    
-    function getUsers()
-    {
-	    /*<![CDATA[*/
-	   	return  /*[[${userList}]]*/ 'default';
-		/*]]>*/
-    }
- 
-	</script>
-    
-</head>
-<body onload="startFunctionsUserPage();">
-	<div class="container">
-		<div class = "griditem1">
-			<div class = "myWallet">
-				<h1 style="color: #4485b8;">
-					<span style="background-color: #000000; color: #ffffff; padding: 0 200px;">My Wallet</span>
-				</h1>
-				<h4>User panel</h4>
-			</div>
-			
-			<div id="clockAndDate" class = "clockAndDate" ></div>
-			  
-			<div class = "loggedInUser" >
-   				Witaj <label th:text="${loggedInUser.name}" ></label>
-	   			<label th:text="${loggedInUser.surname}" ></label>!<br>
-	   			(id: <label th:text="${loggedInUser.id}" ></label>
-	   			username: <label th:text="${loggedInUser.username}" ></label>)
-
-   			</div>
-
-			<div class="square"></div>
-		</div>
-
-		<div class = "griditem2">		
+	<head lang="en">
+	    <meta charset="UTF-8"/>
+	    <title>MyWallet</title>
+	    <link rel="stylesheet" href="css/userPageStyle.css" />
+	    
+		<script src="/js/setTimeAndDate.js"></script>
+		<script src="/js/validateNewUserForm.js"></script>
+		<script src="/js/startFunctionsUserPage.js"></script>
+	    <script th:inline="javascript">
+		    function getUsers(){
+			    /*<![CDATA[*/
+			   	return  /*[[${userList}]]*/ 'default';
+				/*]]>*/
+		    }
+		</script>
+	    
+	</head>
+	<body onload="startFunctionsUserPage();">
+		<div class="container">
 		
+			<div class="griditem1">
+				<div class="myWallet">
+					<h1 style="color: #4485b8;">
+						<span style="background-color: #000000; 
+						color: #ffffff; padding: 0 200px;">My Wallet</span>
+					</h1>
+					<h4>User panel</h4>
+				</div>
+				
+				<div id="clockAndDate" class = "clockAndDate"></div>
+				  
+				<div class="loggedInUser" >
+	   				Witaj <label th:text="${loggedInUser.name}"></label>
+		   			<label th:text="${loggedInUser.surname}"></label>!<br>
+		   			(id: <label th:text="${loggedInUser.id}"></label>
+		   			username: <label th:text="${loggedInUser.username}"></label>)
+	   			</div>
+	
+				<div class="square"></div>
+			</div>
+	
+			<div class = "griditem2">		
 				<form action="/showExpenditures">
     				<input type="submit" value="Expenditure page" />
 				</form>	
 
 				<button onclick="history.back()">🡸</button>		
-		</div>
-		<div class = "griditem3">				
-				   
-					<form id = "formUser" class = "formUser" th:action="@{/saveUser}"  th:object = "${user}"
-					 onsubmit="return validateNewUserForm()" method ="POST" >
-						
-						<h1>Enter user</h1><br>
-					
-						<input type ="hidden" th:field = "*{id}"/>
-					
-						<font>Name</font><br>
-						<input type = "text" id ="name" name = "name" required/><br><br>
-						
-						<font>Surname</font><br>
-						<input type = "text" id ="surname" name = "surname" required/><br><br>
-						
-						<font>Username</font><br>
-						<input type = "text" id ="username" name = "username" required/><br><br>
-						
-						<font>Password</font><br>
-						<input type = "text" id ="password" name = "password" required/><br><br>
-						
-						<font>E-mail</font><br>
-						<input type = "email" id ="email" name = "email" required/><br><br>
-						
-						<font>Roles</font><br>
-						<input type = "checkbox" name = "isAdmin" th:value = 1 />
-						<font color = black>Admin</font><br>
-							
-						<input type = "checkbox" disabled="disabled" checked="checked"/>
-						<font color = black>User</font><br><br>
-						
-						
-						<input type = "submit" value="Save new user">
+			</div>
 			
-					</form>
-					<br>
+			<div class="griditem3">				   
+				<form id="formUser" class="formUser" th:action="@{/saveUser}"  th:object="${user}"
+				 onsubmit="return validateNewUserForm()" method="POST" >
+					
+					<h1>Enter user</h1><br>
+				
+					<input type="hidden" th:field="*{id}"/>
+				
+					<font>Name</font><br>
+					<input type="text" id="name" name="name" required/><br><br>
+					
+					<font>Surname</font><br>
+					<input type="text" id="surname" name="surname" required/><br><br>
+					
+					<font>Username</font><br>
+					<input type="text" id="username" name="username" required/><br><br>
+					
+					<font>Password</font><br>
+					<input type="text" id ="password" name="password" required/><br><br>
+					
+					<font>E-mail</font><br>
+					<input type="email" id="email" name="email" required/><br><br>
+					
+					<font>Roles</font><br>
+					<input type="checkbox" name="isAdmin" th:value=1/>
+					<font>Admin</font><br>
+						
+					<input type="checkbox" disabled="disabled" checked="checked"/>
+					<font>User</font><br><br>
+					
+					<input type="submit" value="Save new user">
+				</form>
+				<br>
+			</div>
+			
+			<div class="griditem4">	
+				<div class="square"></div>		
+				<table class="blueTable" style="vertical-align: top; height: 100px;">
+					<thead>
+						<tr style="height: 30px;">
+						<td style="height: 30px; max-width: 50px; ">IDENTIFICATION NUMBER</td>
+						<td style="height: 30px; width: 200px;">NAME</td>
+						<td style="height: 30px; width: 200px;">SURNAME</td>
+						<td style="height: 30px; width: 200px;">EMAIL</td>
+						<td style="height: 30px; width: 200px;">USERNAME</td>
+						<td style="height: 30px; width: 300px;">PASSWORD</td>
+						<td style="height: 30px; width: 100px;">ROLES</td>
+						<td style="height: 30px; max-width: 10px;"></td>
+						<td style="height: 30px; max-width: 10px;"></td>
+						</tr>
+					</thead>
+					<tbody>
+					    <tr th:each="user : ${userList}">
+				            <td th:text="${user.id}"></td>
+				            <td th:text="${user.name}"></td>
+				            <td th:text="${user.surname}"></td>
+				            <td th:text="${user.email}"></td>
+				            <td th:text="${user.username}"></td>
+				            <td th:text="${user.password}"></td>
+				            <!--  <td th:text="${userRole.role.name}" th:each="userRole : ${user.userRoles}"></td>-->
+				            <td>
+			                    <table>
+			                        <tbody>
+			                            <tr th:each="role : ${user.roles}">
+			                                <td th:text="${role.name}"></td>
+			                            </tr>
+			                        </tbody>
+			                    </table>
+							</td>
+				            <td>
+				            	<form th:action="@{/setUserToUpdate}" th:object="${user}">
+				            		<input type="hidden" th:value="${user.id}" id="id" name="id"/>
+				            		<input type="submit" value="Update"/>
+				            	</form>
+				            </td>
+				            <td>
+				            	<form th:action="@{/deleteUser}" th:object="${user}">
+				            		<input type="hidden" th:value="${user.id}" id="id" name="id"/>
+				            		<input type="submit" value="Delete"/>
+				            	</form>
+				            </td>
+				   		</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<div class = "griditem4">	
-		<div class="square"></div>			
-			<table class="blueTable" style="vertical-align: top; height: 100px;">
-				
-				<thead>
-					<tr style="height: 30px;">
-					<td style="height: 30px; max-width: 50px; ">IDENTIFICATION NUMBER</td>
-					<td style="height: 30px; width: 200px;">NAME</td>
-					<td style="height: 30px; width: 200px;">SURNAME</td>
-					<td style="height: 30px; width: 200px;">EMAIL</td>
-					<td style="height: 30px; width: 200px;">USERNAME</td>
-					<td style="height: 30px; width: 300px;">PASSWORD</td>
-					<td style="height: 30px; width: 100px;">ROLES</td>
-					<td style="height: 30px; max-width: 10px;"></td>
-					<td style="height: 30px; max-width: 10px;"></td>
-					</tr>
-				</thead>
-				
-				<tbody>
-				
-				    <tr th:each="user : ${userList}">
-			            <td th:text="${user.id}"></td>
-			            <td th:text="${user.name}"></td>
-			            <td th:text="${user.surname}"></td>
-			            <td th:text="${user.email}"></td>
-			            <td th:text="${user.username}"></td>
-			            <td th:text="${user.password}"></td>
-			            <!--  <td th:text="${userRole.role.name}" th:each="userRole : ${user.userRoles}"></td>-->
-			            <td>
-		                    <table>
-		                        <tbody>
-		                            <tr th:each = "role : ${user.roles}">
-		                                <td th:text = "${role.name}"></td>
-		                            </tr>
-		                        </tbody>
-		                    </table>
-						</td>
-			            <td>
-			            	<form th:action = "@{/setUserToUpdate}" th:object = "${user}">
-			            		<input type = "hidden" th:value = "${user.id}" id="id" name = "id" />
-			            		<input type = "submit" value = "Update" />
-
-			            	</form>
-			            </td>
-			            <td>
-			            	<form th:action = "@{/deleteUser}" th:object = "${user}">
-			            		<input type = "hidden" th:value = "${user.id}" id="id" name = "id" />
-			            		<input type = "submit" value = "Delete" />
-
-			            	</form>
-			            </td>
-			   		</tr>
-				</tbody>
-				
-			</table>
-		</div>
-		
-</div>
-
-</body>
+	</body>
 </html>

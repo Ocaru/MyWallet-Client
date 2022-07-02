@@ -12,9 +12,10 @@ public class Role {
 	private String name;
 
 	@JsonIgnoreProperties("role")
-	private Set<User> users; 
+	private Set<User> users;
 
 	public Role() {
+		
 	}
 
 	public Role(String name) {
@@ -36,14 +37,12 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
 	public Set<User> getUsers() {
 		return users;
 	}
-	
-	public void addUser(User user)
-	{
+
+	public void addUser(User user) {
 		users.add(user);
 	}
 
@@ -56,16 +55,14 @@ public class Role {
 		return "Role [id=" + id + ", name=" + name + ", users id=" + getUsersId().toString() + "]";
 	}
 
-	private List<Long> getUsersId()
-	{
+	private List<Long> getUsersId() {
 		List<Long> userIdList = new ArrayList<Long>();
-		
+
 		for (User user : users) {
 			userIdList.add(user.getId());
 		}
-		
+
 		return userIdList;
 	}
 
 }
-
