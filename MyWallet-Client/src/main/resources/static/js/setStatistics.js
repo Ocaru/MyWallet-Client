@@ -125,7 +125,7 @@ function buildTabelMoneyByMonth() {
 			let stringTab = [];
 			stringTab = exp.date.split("-");
 
-			if (stringTab[1] == "0" + i)
+			if (stringTab[1] == "0" + i || stringTab[1] == i)
 				moneyByMonth += exp.money;
 		}
 
