@@ -7,11 +7,19 @@ function setDateToForm() {
 
 	dateString += year + "-";
 
-	if (month < 10) dateString += "0" + month + "-";
-	else dateString += month + "-";
+	if (month < 10) {
+		dateString += "0" + month + "-";
+	}
+	else {
+		dateString += month + "-";
+	}
 
-	if (day < 10) dateString += "0" + day + "-";
-	else dateString += day;
+	if (day < 10){
+		dateString += "0" + day;
+	}
+	else {
+	dateString += day;
+	}
 
 	document.getElementById("dateInput").defaultValue = dateString;
 
