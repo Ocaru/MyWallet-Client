@@ -21,14 +21,14 @@ public class UserController {
 	@Autowired
 	private RestClient rc;
 
-	@RequestMapping("/userPage")
+	@RequestMapping("/user")
 	public String showUserPage(Model model) {
 		addUserListToModel(model);
 		addNewUserToModel(model);
 		addRolesToModel(model);
 		addLoggedInUserToModel(model);
 
-		return "userPage";
+		return "user";
 	}
 
 	@RequestMapping("/saveUser")
@@ -47,7 +47,7 @@ public class UserController {
 		json = getJson(tempUser);
 		rc.put("/users", json);
 
-		return "redirect:/userPage";
+		return "redirect:/user";
 	}
 
 	@RequestMapping("/setUserToUpdate")
@@ -63,7 +63,7 @@ public class UserController {
 		addUserListToModel(model);
 		addLoggedInUserToModel(model);
 		
-		return "updateUser";
+		return "userupdate";
 	}
 
 	@RequestMapping("/updateUser")
@@ -80,14 +80,14 @@ public class UserController {
 		String userJSON = getJson(user);
 		rc.put("/users", userJSON);
 		
-		return "redirect:/userPage";
+		return "redirect:/user";
 	}
 
 	@RequestMapping("/deleteUser")
 	public String deleteUser(@ModelAttribute("user") User user) {
 		rc.delete("/users/" + user.getId());
 		
-		return "redirect:/userPage";
+		return "redirect:/user";
 	}
 
 	private String getJson(User user) {

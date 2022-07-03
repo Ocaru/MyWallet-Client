@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
 	<head lang="en">
-		<meta charset="UTF-8" />
+		<meta charset="UTF-8"/>
 		<title>MyWallet</title>
-		<link rel="stylesheet" href="css/updatePageStyle.css" />
+		<link rel="stylesheet" href="css/update.css" />
 		
 		<script src="/js/setTimeAndDate.js"></script>
 		<script src="/js/validateUpdateUserForm.js"></script>
@@ -48,11 +48,11 @@
 			</div>
 	
 			<div class="griditem2">
-				<form action="/userPage">
-					<input type="submit" value="User page" />
+				<form action="/user">
+					<input type="submit" value="User page"/>
 				</form>
 				<form action="/showExpenditures">
-					<input type="submit" value="Expenditure page" />
+					<input type="submit" value="Expenditure page"/>
 				</form>
 	
 				<button onclick="history.back()">🡸</button>
@@ -90,7 +90,7 @@
 					th:value="${userToUpdate.email}" required/><br><br> 
 					
 					<font>Roles</font><br> 
-					<input type="checkbox" name="isAdmin" th:value=1/> 
+					<input type="checkbox" th:value=1 name="isAdmin"/> 
 					
 					<font color=black>Admin</font><br> 
 					<input type="checkbox" disabled="disabled" checked="checked"/> 

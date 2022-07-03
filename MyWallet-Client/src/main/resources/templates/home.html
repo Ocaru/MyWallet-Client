@@ -3,7 +3,7 @@
 	<head lang="en">
 		<meta charset="UTF-8" />
 		<title>MyWallet</title>
-		<link rel="stylesheet" href="css/indexStyle.css" />
+		<link rel="stylesheet" href="css/home.css" />
 		
 		<script src="/js/setTimeAndDate.js"></script>
 		<script src="/js/setDateToForm.js"></script>
@@ -52,8 +52,8 @@
 			</div>
 	
 			<div class="griditem2">
-				<form action="/userPage">
-					<input type="submit" value="User page" />
+				<form action="/user">
+					<input type="submit" value="User page"/>
 				</form>
 				<button onclick="history.back()">🡸</button>
 			</div>
@@ -64,7 +64,7 @@
 					th:object="${expenditure}" method="POST">
 					<h2 style="color: black;">Enter next expenditure</h2>
 	
-					<input type="hidden" th:field="*{id}" /> 
+					<input type="hidden" th:field="*{id}"/> 
 					
 					<font>User</font> 
 					<select id="user_id" name="user_id">
@@ -74,10 +74,10 @@
 					</select> 
 					
 					<font class="fontForm">Name of expenditure</font> 
-					<input type="text" id="name" name="name" /> 
+					<input type="text" id="name" name="name"/> 
 					
 					<font class="fontForm">Money spent</font> 
-					<input type="number" step="0.01" id="money" name="money" />
+					<input type="number" step="0.01" id="money" name="money"/>
 	
 					<font class="fontForm">Category</font> 
 					<select id="category_id" name="category_id">
@@ -87,10 +87,10 @@
 					</select> 
 					
 					<font class="fontForm">Date</font> 
-					<input type="date" name="date" id="dateInput" /> 
+					<input type="date" name="date" id="dateInput"/> 
 					
 					<font class="fontForm">Description</font> 
-					<input type="text" id="description" name="description" /> 
+					<input type="text" id="description" name="description"/> 
 					
 					<input type="submit" value="Save expenditure">
 	
@@ -150,14 +150,14 @@
 							<td>
 								<form th:action="@{/setExpenditureToUpdate}"
 									th:object="${expenditure}">
-									<input type="hidden" th:value="${exp.id}" id="id" name="id" />
-									<input type="submit" value="Update" />
+									<input type="hidden" th:value="${exp.id}" id="id" name="id"/>
+									<input type="submit" value="Update"/>
 								</form>
 							</td>
 							<td>
 								<form th:action="@{/deleteExpenditure}" th:object="${expenditure}">
-									<input type="hidden" th:value="${exp.id}" id="id" name="id" />
-									<input type="submit" value="Delete" />
+									<input type="hidden" th:value="${exp.id}" id="id" name="id"/>
+									<input type="submit" value="Delete"/>
 								</form>
 							</td>
 						</tr>

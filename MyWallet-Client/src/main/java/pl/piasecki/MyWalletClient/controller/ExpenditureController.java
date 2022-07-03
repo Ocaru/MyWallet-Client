@@ -50,7 +50,7 @@ public class ExpenditureController {
 		addNewExpenditureToModel(model);
 		addLoggedInUserToModel(model);
 
-		return "index";
+		return "home";
 	}
 
 	@RequestMapping("/showExpenditures")
@@ -61,7 +61,7 @@ public class ExpenditureController {
 		addNewExpenditureToModel(model);
 		addLoggedInUserToModel(model);
 
-		return "index";
+		return "home";
 	}
 
 	@RequestMapping("/saveExpenditure")
@@ -91,7 +91,7 @@ public class ExpenditureController {
 		addCategoriesToModel(model);
 		addLoggedInUserToModel(model);
 
-		return "/expenditureUpdatePage";
+		return "/expupdate";
 	}
 
 	@RequestMapping("/deleteExpenditure")
@@ -111,7 +111,7 @@ public class ExpenditureController {
 		addNewExpenditureToModel(model);
 		addLoggedInUserToModel(model);
 
-		return "index";
+		return "home";
 	}
 
 	private void addUsersToModel(Model model) {
