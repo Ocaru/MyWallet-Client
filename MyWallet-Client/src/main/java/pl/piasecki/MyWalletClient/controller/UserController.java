@@ -33,19 +33,15 @@ public class UserController {
 
 	@RequestMapping("/saveUser")
 	public String saveNewUser(@ModelAttribute("user") User user) {
-		String json = getJson(user);
-		rc.post("/users", json);
-
 		roleTab = rc.getRoles("/roles");
-		User tempUser = rc.getUser("/users/username=" + user.getUsername());
 
 		if (user.getIsAdmin() == 1) {
-			tempUser.addRole(roleTab[0]);
+			user.addRole(roleTab[0]);
 		}
-		tempUser.addRole(roleTab[1]);
+		user.addRole(roleTab[1]);
 
-		json = getJson(tempUser);
-		rc.put("/users", json);
+		String json = getJson(user);
+		rc.post("/users", json);
 
 		return "redirect:/user";
 	}

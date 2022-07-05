@@ -23,7 +23,9 @@ public class RestClient {
 	private RestTemplate rest;
 	private HttpHeaders headers;
 	private HttpStatus status;
-
+	private HttpEntity<String> requestEntity;
+	private HttpEntity<String> jsonRequestEntity;
+	
 	public RestClient() {
 		this.rest = new RestTemplate();
 		this.headers = new HttpHeaders();
@@ -32,93 +34,84 @@ public class RestClient {
 	}
 
 	public void authorization(String json) {
-		HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
-		ResponseEntity<String> response = new RestTemplate().exchange(server + "/login", HttpMethod.POST, requestEntity,
+		jsonRequestEntity = new HttpEntity<String>(json, headers);
+		ResponseEntity<String> response = new RestTemplate().exchange(server + "/login", HttpMethod.POST, jsonRequestEntity,
 				String.class);
 		this.setStatus(response.getStatusCode());
 
 		String JwtToken = response.getHeaders().get("Authorization").toString();
 		JwtToken = JwtToken.substring(1, JwtToken.length() - 1);
 		headers.set("Authorization", JwtToken);
-
+		requestEntity = new HttpEntity<String>("", headers);
 	}
 
 	public <T> List<T> get(String uri, Class<T> klazz) {
-		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-		ResponseEntity<List<T>> responseEntity;
-		responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity,
-				new ParameterizedTypeReference<List<T>>() {
-				});
+		ResponseEntity<List<T>> responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity,
+				new ParameterizedTypeReference<List<T>>() {});
 		this.setStatus(responseEntity.getStatusCode());
 
 		return responseEntity.getBody();
 	}
 
 	public Expenditure[] getExpenditures(String uri) {
-		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-		ResponseEntity<Expenditure[]> responseEntity;
-		responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity, Expenditure[].class);
+		ResponseEntity<Expenditure[]> responseEntity = 
+			rest.exchange(server + uri, HttpMethod.GET, requestEntity, Expenditure[].class);
 		this.setStatus(responseEntity.getStatusCode());
 
 		return responseEntity.getBody();
 	}
 
 	public User[] getUsers(String uri) {
-		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-		ResponseEntity<User[]> responseEntity;
-		responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity, User[].class);
+		ResponseEntity<User[]> responseEntity = 
+			rest.exchange(server + uri, HttpMethod.GET, requestEntity, User[].class);
 		this.setStatus(responseEntity.getStatusCode());
 
 		return responseEntity.getBody();
 	}
 
 	public User getUser(String uri) {
-		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-		ResponseEntity<User> responseEntity;
-		responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity, User.class);
+		ResponseEntity<User> responseEntity = 
+			rest.exchange(server + uri, HttpMethod.GET, requestEntity, User.class);
 		this.setStatus(responseEntity.getStatusCode());
 
 		return responseEntity.getBody();
 	}
 
 	public ExpenditureCategory[] getExpenditureCategory(String uri) {
-		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-		ResponseEntity<ExpenditureCategory[]> responseEntity;
-		responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity, ExpenditureCategory[].class);
+		ResponseEntity<ExpenditureCategory[]> responseEntity = 
+			rest.exchange(server + uri, HttpMethod.GET, requestEntity, ExpenditureCategory[].class);
 		this.setStatus(responseEntity.getStatusCode());
 
 		return responseEntity.getBody();
 	}
 
 	public Role[] getRoles(String uri) {
-		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-		ResponseEntity<Role[]> responseEntity;
-		responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity, Role[].class);
+		ResponseEntity<Role[]> responseEntity = 
+			rest.exchange(server + uri, HttpMethod.GET, requestEntity, Role[].class);
 		this.setStatus(responseEntity.getStatusCode());
 
 		return responseEntity.getBody();
 	}
 
 	public String post(String uri, String json) {
-		HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
-		ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.POST, requestEntity,
-				String.class);
+		jsonRequestEntity = new HttpEntity<String>(json, headers);
+		ResponseEntity<String> responseEntity = 
+			rest.exchange(server + uri, HttpMethod.POST, jsonRequestEntity, String.class);
 		this.setStatus(responseEntity.getStatusCode());
 
 		return responseEntity.getBody();
 	}
 
 	public void put(String uri, String json) {
-		HttpEntity<String> requestEntity = new HttpEntity<String>(json, headers);
-		ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.PUT, requestEntity,
-				String.class);
+		jsonRequestEntity = new HttpEntity<String>(json, headers);
+		ResponseEntity<String> responseEntity = 
+			rest.exchange(server + uri, HttpMethod.PUT, jsonRequestEntity, String.class);
 		this.setStatus(responseEntity.getStatusCode());
 	}
 
 	public void delete(String uri) {
-		HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
-		ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.DELETE, requestEntity,
-				String.class);
+		ResponseEntity<String> responseEntity = 
+			rest.exchange(server + uri, HttpMethod.DELETE, requestEntity, String.class);
 		this.setStatus(responseEntity.getStatusCode());
 	}
 
@@ -129,4 +122,9 @@ public class RestClient {
 	public void setStatus(HttpStatus status) {
 		this.status = status;
 	}
+
+	public HttpHeaders getHeaders() {
+		return headers;
+	}
+	
 }
