@@ -10,7 +10,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import pl.piasecki.MyWalletClient.RestClient;
-import pl.piasecki.MyWalletClient.configuration.LoginDTO;
 import pl.piasecki.MyWalletClient.model.Expenditure;
 import pl.piasecki.MyWalletClient.model.ExpenditureCategory;
 import pl.piasecki.MyWalletClient.model.User;
@@ -24,34 +23,6 @@ public class ExpenditureController {
 
 	@Autowired
 	private RestClient restClient;;
-
-	@RequestMapping("/")
-	public String showLoginPage(Model model) {
-		model.addAttribute("loginCredentials", new LoginDTO());
-
-		return "login";
-	}
-
-	@RequestMapping("/home")
-	public String login(@ModelAttribute("loginDTO") LoginDTO loginDto, Model model) {
-		JsonMapper mapper = new JsonMapper();
-		String loginDtoJSON = "";
-		try {
-			loginDtoJSON = mapper.writeValueAsString(loginDto);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-
-		restClient.authorization(loginDtoJSON);
-
-		addExpendituresToModel(model);
-		addUsersToModel(model);
-		addCategoriesToModel(model);
-		addNewExpenditureToModel(model);
-		addLoggedInUserToModel(model);
-
-		return "home";
-	}
 
 	@RequestMapping("/showExpenditures")
 	public String showExpenditures(Model model) {
