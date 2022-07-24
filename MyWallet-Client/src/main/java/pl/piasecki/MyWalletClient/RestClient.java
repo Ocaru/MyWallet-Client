@@ -2,6 +2,7 @@ package pl.piasecki.MyWalletClient;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,16 +20,17 @@ import pl.piasecki.MyWalletClient.model.User;
 @Component
 public class RestClient {
 
-	private final String server = "http://localhost:8080";
+	private final String server;
 	private RestTemplate rest;
 	private HttpHeaders headers;
 	private HttpStatus status;
 	private HttpEntity<String> requestEntity;
 	private HttpEntity<String> jsonRequestEntity;
 	
-	public RestClient() {
+	public RestClient(@Value("${restClient.server}") String server) {
 		this.rest = new RestTemplate();
 		this.headers = new HttpHeaders();
+		this.server = server;
 		headers.add("Content-Type", "application/json");
 		headers.add("Accept", "*/*");
 	}
