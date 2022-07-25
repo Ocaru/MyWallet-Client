@@ -1,4 +1,4 @@
-# MyWallet-Server - expenditure monitoring application
+# MyWallet-Client - expenditure monitoring application
 
 ## Introduction
 MyWallet is a simple application that allows you to manage your own expenditures and gives you the ability to analyze them more easily.
